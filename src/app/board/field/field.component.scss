@@ -1,0 +1,13 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: rgb(230, 128, 120);
+  border: 1px solid rgb(204, 124, 117);
+  box-sizing: border-box;
+}
+
+.field:hover {
+  background-color: lightgreen;
+}

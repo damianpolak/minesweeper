@@ -1,0 +1,19 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  background-color: pink;
+
+  .board-row {
+    display: flex;
+    flex-direction: row;
+
+    .board-col {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      background-color: lightblue;
+      // padding: 10px;
+      cursor: default;
+    }
+  }
+}

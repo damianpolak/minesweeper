@@ -1,0 +1,8 @@
+<div class="board">
+  <div *ngFor="let row of matrix" class="board-row">
+    <div *ngFor="let col of row" class="board-col">
+      <app-field [values]="col" [squareSize]="35"></app-field>
+    </div>
+
+  </div>
+</div>
