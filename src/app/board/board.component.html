@@ -1,8 +1,7 @@
-<div class="board">
-  <div *ngFor="let row of matrix" class="board-row">
-    <div *ngFor="let col of row" class="board-col">
-      <app-field [values]="col" [squareSize]="35"></app-field>
+<div *ngIf="boardReady" class="board">
+  <div *ngFor="let row of matrix; let r = index" class="board-row">
+    <div *ngFor="let col of row; let c = index" class="board-col" (click)="onPlayerClick($event, r, c)" (contextmenu)="onPlayerRightClick($event)">
+      <app-field [values]="col.value" [squareSize]="35"></app-field>
     </div>
-
   </div>
 </div>

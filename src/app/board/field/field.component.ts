@@ -8,6 +8,7 @@ import { FieldSize } from 'src/app/core/interfaces/field.interface';
 })
 export class FieldComponent {
 
-  @Input() values: string = '';
+  // Input - status hidden/visible
+  @Input() values: string | number = '';
   @Input() squareSize?: number;
 }
