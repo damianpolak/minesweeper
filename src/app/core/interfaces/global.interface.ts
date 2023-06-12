@@ -9,6 +9,16 @@ export enum STATES {
   FINISHED = 'FINISHED'
 }
 
+export interface GameState {
+  before: STATES,
+  current: STATES
+}
+
+export interface GameScore {
+  discovered: number,
+  toDiscover: number
+}
+
 export enum LEVELS {
   TEST = 'test',
   LOW = 'low',

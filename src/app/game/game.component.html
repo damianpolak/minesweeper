@@ -1,1 +1,9 @@
-<p>game works!</p>
+<div class="game">
+  <div class="board">
+    <app-board [level]="selectedLevel" (onGameStateChange)="updateGameState($event)" (onMatrixUpdate)="updateGameScore($event)"></app-board>
+  </div>
+  <div class="score">
+    <span>Game state: {{ gameState }}</span>
+    <span>Score: {{ discovered }}</span>
+  </div>
+</div>

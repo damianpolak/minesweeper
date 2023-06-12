@@ -1,0 +1,15 @@
+.game {
+  display: flex;
+  flex-direction: row;
+  padding: 2.5rem;
+  background-color: lightblue;
+
+  .board {
+    padding-right: 2rem;
+  }
+
+  .score {
+    display: flex;
+    flex-direction: column;
+  }
+}

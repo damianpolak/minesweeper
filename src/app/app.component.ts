@@ -7,15 +7,10 @@ import { Global } from './core/classes/global.class';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'minesweeper';
-  public selectedLevel: Level;
+export class AppComponent {
+  // public selectedLevel: Level;
 
   constructor() {
-    this.selectedLevel = Global.getLevel(LEVELS.TEST);
-  }
-
-  ngOnInit(): void {
-
+    // this.selectedLevel = Global.getLevel(LEVELS.LOW);
   }
 }

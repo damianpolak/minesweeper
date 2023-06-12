@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { LEVELS, Level, STATES } from '../core/interfaces/global.interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Address, Field, SYMBOLS } from '../core/interfaces/field.interface';
 import { Global } from '../core/classes/global.class';
 
@@ -11,6 +11,8 @@ import { Global } from '../core/classes/global.class';
 export class BoardComponent implements OnInit {
 
   @Input() level: Level = { name: LEVELS.LOW, row: 10, col: 10, mines: 5 };
+  @Output() onGameStateChange = new EventEmitter<GameState>();
+  @Output() onMatrixUpdate = new EventEmitter<Field[][]>();
 
   public boardReady: boolean = false;
   public matrix: Field[][] = [];
@@ -18,6 +20,8 @@ export class BoardComponent implements OnInit {
   private _col: number = 0;
   private _row: number = 0;
   public addressClicked: Address = { row: 0, col: 0};
+
+  constructor() {}
 
   ngOnInit(): void {
     console.log(`=== level`, this.level);
@@ -63,9 +67,10 @@ export class BoardComponent implements OnInit {
     return addresses;
   }
 
-  public setGameState(state: STATES): { before: STATES, after: STATES } {
-    let result = { before: this._gameState, after: state };
+  public setGameState(state: STATES): GameState {
+    let result: GameState = { before: this._gameState, current: state };
     this._gameState = state;
+    this.onGameStateChange.emit(result);
     return result;
   }
 
@@ -88,22 +93,27 @@ export class BoardComponent implements OnInit {
     }
 
     if (this.getGameState() === STATES.FIRST_CLICK) {
+      // this.score.init(this.matrix);
       this.setGameState(STATES.RUNNING);
     }
 
     if (this.getGameState() === STATES.RUNNING) {
-      if (this.isFieldMines(addr.row, addr.col)) {
+      if (this.isFieldMined(addr.row, addr.col)) {
         this.setGameState(STATES.LOSE);
       }
 
       if (this.isFieldEmpty(addr.row, addr.col)) {
-        return this.discoverEmptyFields(addr.row, addr.col);
+        // return this.discoverEmptyFields(addr.row, addr.col);
+        this.discoverEmptyFields(addr.row, addr.col);
       }
 
       if (this.isFieldMarked(addr.row, addr.col)) {
-        return this.discoverMarkedFields(addr.row, addr.col);
+        // return this.discoverMarkedFields(addr.row, addr.col);
+        this.discoverMarkedFields(addr.row, addr.col);
       }
     }
+
+    this.onMatrixUpdate.emit(this.matrix);
   }
 
   public onPlayerRightClick(event: any): void {
@@ -182,7 +192,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  public isFieldMines(x: number, y: number): boolean {
+  public isFieldMined(x: number, y: number): boolean {
     return this.matrix[x][y].value === SYMBOLS.MINE ? true : false;
   };
 
@@ -213,6 +223,7 @@ export class BoardComponent implements OnInit {
     this.discoveredList.push([`${x}|${y}|${this.matrix[x][y].value}`]);
     return [x, y];
   };
+
 
   public discoverEmptyFields(x: number, y: number): void {
     if (this.testMatrixEdges(x, y)) {
