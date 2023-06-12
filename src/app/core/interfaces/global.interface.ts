@@ -1,33 +1,25 @@
 export type px = number;
 
 export enum STATES {
-  NOT_STARTED,
-  FIRST_CLICK,
-  RUNNING,
-  WIN,
-  LOSE,
-  FINISHED
+  NOT_STARTED = 'NOT_STARTED',
+  FIRST_CLICK = 'FIRST_CLICK',
+  RUNNING = 'RUNNING',
+  WIN = 'WIN',
+  LOSE = 'LOSE',
+  FINISHED = 'FINISHED'
 }
 
-export const levels = {
-  low: {
-    x: 9,
-    y: 9,
-    m: 10,
-  },
-  mid: {
-    x: 16,
-    y: 16,
-    m: 40,
-  },
-  hard: {
-    x: 16,
-    y: 30,
-    m: 120,
-  },
-  hardcore: {
-    x: 20,
-    y: 42,
-    m: 180,
-  },
-};
+export enum LEVELS {
+  TEST = 'test',
+  LOW = 'low',
+  MID = 'mid',
+  HARD = 'hard',
+  HARDCORE = 'hardcore'
+}
+
+export type Level = {
+  name: LEVELS,
+  row: number,
+  col: number,
+  mines: number
+}
