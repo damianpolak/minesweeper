@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Field, SYMBOLS } from '../interfaces/field.interface';
+import { LEVELS, Level } from '../interfaces/global.interface';
+import { Global } from '../classes/global.class';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +19,15 @@ export class ScoreService {
     return this._toDiscover;
   }
 
-  get toDiscoverPerc(): number {
-    return (100 * this._toDiscover) / this._discovered;
+  get discoveredPerc(): number {
+    return Math.round((100 * this._discovered) / this._toDiscover);
   }
 
   constructor() { }
 
-  public init(inputMatrix: Field[][]): void {
-    inputMatrix.forEach(row => {
-      row.forEach(cell => {
-        this._toDiscover = cell.value != SYMBOLS.MINE ? this._toDiscover++ : this._toDiscover;
-      })
-    });
+  public init(level: Level): void {
+    const selectedLevel = level;
+    this._toDiscover = (selectedLevel.row * selectedLevel.col) - selectedLevel.mines;
   }
 
   public increment(): number {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Address, Field, SYMBOLS } from '../core/interfaces/field.interface';
 import { Global } from '../core/classes/global.class';
@@ -8,11 +8,12 @@ import { Global } from '../core/classes/global.class';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnChanges {
 
   @Input() level: Level = { name: LEVELS.LOW, row: 10, col: 10, mines: 5 };
+  @Input() finished: boolean = false;
   @Output() onGameStateChange = new EventEmitter<GameState>();
-  @Output() onMatrixUpdate = new EventEmitter<Field[][]>();
+  @Output() onDiscoverCell = new EventEmitter<Address>();
 
   public boardReady: boolean = false;
   public matrix: Field[][] = [];
@@ -26,6 +27,12 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     console.log(`=== level`, this.level);
     this._initializeBoard();
+  }
+
+  ngOnChanges(simpleChange: SimpleChanges): void {
+    if('finished' in simpleChange) {
+      this.setGameState(STATES.WIN);
+    }
   }
 
   private _initializeBoard(): void {
@@ -79,11 +86,11 @@ export class BoardComponent implements OnInit {
   }
 
   public onPlayerClick(event: any, row: number, col: number): void {
-    console.log(`=== onPlayerClick [${row},${col}]`, event);
-    this.addressClicked = { row: row, col: col };
-    this.playerClick(this.addressClicked);
-
-    console.log(`=== GAME STATE [${this.getGameState()}]`);
+    if(!this.finished) {
+      console.log(`=== onPlayerClick [${row},${col}]`, event);
+      this.addressClicked = { row: row, col: col };
+      this.playerClick(this.addressClicked);
+    }
   }
 
   private playerClick(addr: Address): any {
@@ -93,7 +100,6 @@ export class BoardComponent implements OnInit {
     }
 
     if (this.getGameState() === STATES.FIRST_CLICK) {
-      // this.score.init(this.matrix);
       this.setGameState(STATES.RUNNING);
     }
 
@@ -103,17 +109,13 @@ export class BoardComponent implements OnInit {
       }
 
       if (this.isFieldEmpty(addr.row, addr.col)) {
-        // return this.discoverEmptyFields(addr.row, addr.col);
         this.discoverEmptyFields(addr.row, addr.col);
       }
 
       if (this.isFieldMarked(addr.row, addr.col)) {
-        // return this.discoverMarkedFields(addr.row, addr.col);
         this.discoverMarkedFields(addr.row, addr.col);
       }
     }
-
-    this.onMatrixUpdate.emit(this.matrix);
   }
 
   public onPlayerRightClick(event: any): void {
@@ -150,6 +152,7 @@ export class BoardComponent implements OnInit {
   public calcMinesAround(addr: Address) {
     const x = addr.row;
     const y = addr.col;
+
 
     for (let i = 0; i <= x - 1; i++) {
       for (let j = 0; j <= y - 1; j++) {
@@ -216,11 +219,11 @@ export class BoardComponent implements OnInit {
     return this.matrix[x][y].value.toString().includes('d') ? true : false;
   };
 
-  public discoveredList: any[] = [];
 
   public discoverMarkedFields(x: number, y: number) {
     this.matrix[x][y].value += 'd';
-    this.discoveredList.push([`${x}|${y}|${this.matrix[x][y].value}`]);
+    this.onDiscoverCell.emit({ row: x, col: y });
+
     return [x, y];
   };
 
@@ -229,19 +232,18 @@ export class BoardComponent implements OnInit {
     if (this.testMatrixEdges(x, y)) {
       if (this.matrix[x][y].value == 0 && this.isFieldDiscovered(x, y) == false) {
         this.matrix[x][y].value = '0d';
-        this.discoveredList.push([`${x}|${y}|0d`]);
+        this.onDiscoverCell.emit({ row: x, col: y });
 
         /*
-      case_a: { x: x - 1, y: y - 1 },
-      case_b: { x: x, y: y - 1 },
-      case_c: { x: x + 1, y: y - 1 },
-      case_d: { x: x - 1, y: y },
-      case_e: { x: x, y: y },
-      case_f: { x: x + 1, y: y },
-      case_g: { x: x - 1, y: y + 1 },
-      case_h: { x: x, y: y + 1 },
-      case_i: { x: x + 1, y: y + 1 },
-
+          case_a: { x: x - 1, y: y - 1 },
+          case_b: { x: x, y: y - 1 },
+          case_c: { x: x + 1, y: y - 1 },
+          case_d: { x: x - 1, y: y },
+          case_e: { x: x, y: y },
+          case_f: { x: x + 1, y: y },
+          case_g: { x: x - 1, y: y + 1 },
+          case_h: { x: x, y: y + 1 },
+          case_i: { x: x + 1, y: y + 1 },
         */
         this.discoverEmptyFields(x - 1, y); // case_d: { x: x - 1, y: y },
         this.discoverEmptyFields(x + 1, y); // case_f: { x: x + 1, y: y },

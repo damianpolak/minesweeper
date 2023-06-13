@@ -1,9 +1,9 @@
 <div class="game">
   <div class="board">
-    <app-board [level]="selectedLevel" (onGameStateChange)="updateGameState($event)" (onMatrixUpdate)="updateGameScore($event)"></app-board>
+    <app-board [level]="selectedLevel" [finished]="finished" (onGameStateChange)="updateGameState($event)" (onDiscoverCell)="updateGameScore($event)"></app-board>
   </div>
   <div class="score">
     <span>Game state: {{ gameState }}</span>
-    <span>Score: {{ discovered }}</span>
+    <span>Discovered: {{ score.discoveredPerc }}%</span>
   </div>
 </div>
