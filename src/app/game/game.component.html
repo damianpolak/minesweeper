@@ -5,5 +5,8 @@
   <div class="score">
     <span>Game state: {{ gameState }}</span>
     <span>Discovered: {{ score.discoveredPerc }}%</span>
+    <span>Timer: {{ timer.count }}</span>
+    <span (click)="onStartTimer()">Start Timer</span>
+    <span (click)="onStopTimer()">Stop Timer</span>
   </div>
 </div>
