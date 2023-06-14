@@ -13,11 +13,14 @@ export enum SYMBOLS {
   THREE = 3,
   FOUR = 4,
   FIVE = 5,
-  SIX = 6
+  SIX = 6,
+  MARKED = '!'
 }
 
 export type Field = {
   value: string | number,
+  discovered: boolean,
+  marked: boolean,
   addr: Address
 }
 

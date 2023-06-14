@@ -20,7 +20,7 @@ export class GameComponent implements Game {
     public score: ScoreService,
     public timer: TimerService
   ) {
-    this.selectedLevel = Global.getLevel(LEVELS.TEST);
+    this.selectedLevel = Global.getLevel(LEVELS.MID);
     this.score.init(this.selectedLevel);
     this.gameState = STATES.NOT_STARTED;
     this.finished = false;

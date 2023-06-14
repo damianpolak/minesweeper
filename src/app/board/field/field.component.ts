@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FieldSize } from 'src/app/core/interfaces/field.interface';
 
 @Component({
@@ -6,9 +6,15 @@ import { FieldSize } from 'src/app/core/interfaces/field.interface';
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss']
 })
-export class FieldComponent {
+export class FieldComponent implements OnInit {
 
   // Input - status hidden/visible
-  @Input() values: string | number = '';
+  @Input() value: string | number = '';
   @Input() squareSize?: number;
+  @Input() discovered: boolean = false;
+  @Input() marked: boolean = false;
+
+  ngOnInit(): void {
+
+  }
 }

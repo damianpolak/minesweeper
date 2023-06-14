@@ -49,6 +49,8 @@ export class BoardComponent implements OnInit, OnChanges {
       for(let col = 0; col <= this._col - 1; col++) {
         this.matrix[row][col] = {
           value: SYMBOLS.NONE,
+          discovered: false,
+          marked: false,
           addr: { row: row, col: col }
         }
       }
@@ -85,11 +87,14 @@ export class BoardComponent implements OnInit, OnChanges {
     return this._gameState;
   }
 
-  public onPlayerClick(event: any, row: number, col: number): void {
+  public onPlayerClick(event: any, field: Field): void {
+  // public onPlayerClick(event: any, obj: Field,row: number, col: number): void {
     if(!this.finished) {
-      console.log(`=== onPlayerClick [${row},${col}]`, event);
-      this.addressClicked = { row: row, col: col };
-      this.playerClick(this.addressClicked);
+      if(!field.discovered && !field.marked) {
+        console.log(`=== onPlayerClick `, field);
+        this.addressClicked = { row: field.addr.row, col: field.addr.col };
+        this.playerClick(this.addressClicked);
+      }
     }
   }
 
@@ -112,15 +117,16 @@ export class BoardComponent implements OnInit, OnChanges {
         this.discoverEmptyFields(addr.row, addr.col);
       }
 
-      if (this.isFieldMarked(addr.row, addr.col)) {
-        this.discoverMarkedFields(addr.row, addr.col);
+      if (this.isFieldNumbered(addr.row, addr.col)) {
+        this.discoverNumberedFields(addr.row, addr.col);
       }
     }
   }
 
-  public onPlayerRightClick(event: any): void {
+  public onPlayerRightClick(event: any, field: Field): void {
     event.preventDefault();
     console.log(`=== onPlayerRightClick`, event);
+    this._toggleFieldAsMarked(field);
   }
 
   public firstClick(addr: Address): boolean {
@@ -203,7 +209,7 @@ export class BoardComponent implements OnInit, OnChanges {
     return this.matrix[x][y].value == SYMBOLS.NONE ? true : false;
   };
 
-  public isFieldMarked(x: number, y: number): boolean {
+  public isFieldNumbered(x: number, y: number): boolean {
     if (
       this.matrix[x][y].value != SYMBOLS.NONE &&
       this.matrix[x][y].value != SYMBOLS.MINE &&
@@ -216,22 +222,32 @@ export class BoardComponent implements OnInit, OnChanges {
   };
 
   public isFieldDiscovered(x: number, y: number): boolean {
-    return this.matrix[x][y].value.toString().includes('d') ? true : false;
+    // return this.matrix[x][y].value.toString().includes('d') ? true : false;
+    return this.matrix[x][y].discovered ? true : false;
   };
 
 
-  public discoverMarkedFields(x: number, y: number) {
-    this.matrix[x][y].value += 'd';
+  public discoverNumberedFields(x: number, y: number) {
+    this.matrix[x][y].discovered = true;
     this.onDiscoverCell.emit({ row: x, col: y });
 
     return [x, y];
   };
 
+  private _toggleFieldAsMarked(field: Field): void {
+    this.matrix.forEach(row => {
+      row.forEach(cell => {
+        if(cell.addr === field.addr) {
+          cell.marked = cell.marked ? false : true;
+        }
+      })
+    })
+  }
 
   public discoverEmptyFields(x: number, y: number): void {
     if (this.testMatrixEdges(x, y)) {
       if (this.matrix[x][y].value == 0 && this.isFieldDiscovered(x, y) == false) {
-        this.matrix[x][y].value = '0d';
+        this.matrix[x][y].discovered = true;
         this.onDiscoverCell.emit({ row: x, col: y });
 
         /*
@@ -257,10 +273,10 @@ export class BoardComponent implements OnInit, OnChanges {
         this.discoverEmptyFields(x + 1, y - 1); // case_c: { x: x + 1, y: y - 1 },
       } else if (
         this.matrix[x][y].value != 0 &&
-        this.isFieldMarked(x, y) == true &&
+        this.isFieldNumbered(x, y) == true &&
         this.isFieldDiscovered(x, y) == false
       ) {
-        this.discoverMarkedFields(x, y);
+        this.discoverNumberedFields(x, y);
       }
     }
   };

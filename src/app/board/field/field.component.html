@@ -1,3 +1,6 @@
-<div class="field" style="font-size: 10px;" [style.width.px]="squareSize" [style.height.px]="squareSize">
-  {{ values }}
+<div class="field" [style.width.px]="squareSize" [style.height.px]="squareSize" [ngClass]="{'value-discovered': discovered}">
+  <div *ngIf="discovered">
+    <span *ngIf="value !== 0">{{ value }}</span>
+  </div>
+  <span *ngIf="marked">!</span>
 </div>
