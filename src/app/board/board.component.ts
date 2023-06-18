@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Address, Field, SYMBOLS } from '../core/interfaces/field.interface';
 import { Global } from '../core/classes/global.class';
@@ -6,7 +6,8 @@ import { Global } from '../core/classes/global.class';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardComponent implements OnInit, OnChanges {
 
@@ -68,6 +69,7 @@ export class BoardComponent implements OnInit, OnChanges {
       const randomCol = Math.floor(Math.random() * this.level?.col);
       if (this.matrix[randomRow][randomCol].value != SYMBOLS.MINE) {
         this.matrix[randomRow][randomCol].value = SYMBOLS.MINE;
+        this.matrix[randomRow][randomCol].discovered = false;
         return this._setMines(--mines, [...addresses, ...[{row: randomRow, col: randomCol}]]);
       } else {
         return this._setMines(mines, addresses);
@@ -89,7 +91,7 @@ export class BoardComponent implements OnInit, OnChanges {
 
   public onPlayerClick(event: any, field: Field): void {
   // public onPlayerClick(event: any, obj: Field,row: number, col: number): void {
-    if(!this.finished) {
+    if(!this.finished && this.getGameState() != STATES.LOSE) {
       if(!field.discovered && !field.marked) {
         console.log(`=== onPlayerClick `, field);
         this.addressClicked = { row: field.addr.row, col: field.addr.col };
@@ -110,6 +112,7 @@ export class BoardComponent implements OnInit, OnChanges {
 
     if (this.getGameState() === STATES.RUNNING) {
       if (this.isFieldMined(addr.row, addr.col)) {
+        this._discoverMinedFields();
         this.setGameState(STATES.LOSE);
       }
 
@@ -280,4 +283,14 @@ export class BoardComponent implements OnInit, OnChanges {
       }
     }
   };
+
+  private _discoverMinedFields(): void {
+    this.matrix.forEach(row => {
+      row.forEach(cell => {
+        if(!cell.marked && cell.value == SYMBOLS.MINE) {
+          cell.discovered = true;
+        }
+      })
+    })
+  }
 }

@@ -6,7 +6,9 @@ export class Global {
     { name: LEVELS.LOW, row: 9, col: 9, mines: 10 },
     { name: LEVELS.MID, row: 16, col: 16, mines: 40 },
     { name: LEVELS.HARD, row: 16, col: 30, mines: 120 },
-    { name: LEVELS.HARDCORE, row: 20, col: 42, mines: 180 }
+    { name: LEVELS.HARDCORE, row: 20, col: 42, mines: 15 },
+    // { name: LEVELS.SUPERHARDCORE, row: 70, col: 70, mines: 80 }
+    // { name: LEVELS.HARDCORE, row: 20, col: 42, mines: 180 }
   ];
 
   public static getLevel(name: LEVELS): Level {

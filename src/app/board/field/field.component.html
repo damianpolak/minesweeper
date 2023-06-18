@@ -1,6 +1,8 @@
-<div class="field" [style.width.px]="squareSize" [style.height.px]="squareSize" [ngClass]="{'value-discovered': discovered}">
-  <div *ngIf="discovered">
+<div class="field" [style.width.px]="squareSize" [style.height.px]="squareSize">
+  <img [src]="imageFile"/>
+  <!-- <div *ngIf="discovered">
     <span *ngIf="value !== 0">{{ value }}</span>
-  </div>
-  <span *ngIf="marked">!</span>
+  </div> -->
+  <!-- <span *ngIf="marked">!</span> -->
+  <!-- <img *ngIf="marked" src="/assets/gfx/flag.png"/> -->
 </div>

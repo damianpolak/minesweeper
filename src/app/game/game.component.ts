@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Game } from '../core/interfaces/game.interface';
 import { GameScore, GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Global } from '../core/classes/global.class';
@@ -9,7 +9,8 @@ import { TimerService } from '../core/services/timer.service';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent implements Game {
   selectedLevel: Level;
@@ -20,7 +21,7 @@ export class GameComponent implements Game {
     public score: ScoreService,
     public timer: TimerService
   ) {
-    this.selectedLevel = Global.getLevel(LEVELS.MID);
+    this.selectedLevel = Global.getLevel(LEVELS.HARDCORE);
     this.score.init(this.selectedLevel);
     this.gameState = STATES.NOT_STARTED;
     this.finished = false;
@@ -41,6 +42,9 @@ export class GameComponent implements Game {
       case STATES.WIN: {
         this.timer.stop();
       } break;
+      case STATES.LOSE: {
+        this.timer.stop();
+      }
     }
   }
 

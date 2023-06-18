@@ -3,8 +3,9 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  background-color: rgb(230, 128, 120);
-  border: 1px solid rgb(204, 124, 117);
+  // background-color: rgb(230, 128, 120);
+  // border: 1px solid rgb(204, 124, 117);
+  padding: 1px;
   box-sizing: border-box;
   user-select: none;
   font-size: 12px;
@@ -14,7 +15,12 @@
 }
 
 .field:hover {
-  background-color: lightgreen;
+  // background-color: lightgreen;
+  // border: 1px solid yellow;
+  // border-radius: 5px;
+  background-color: #a6c300;
+  border-radius: 8px;
+  opacity:0.7 !important;
 }
 
 .value-discovered {
