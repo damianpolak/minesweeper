@@ -14,6 +14,7 @@ export class FieldComponent implements OnInit, OnChanges {
   @Input() squareSize?: number;
   @Input() discovered: boolean = false;
   @Input() marked: boolean = false;
+  @Input() hint: boolean = false;
 
   public imagePath: string = '/assets/gfx/';
   public imageFile: string = '';
@@ -23,7 +24,6 @@ export class FieldComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(`=== changes`, changes);
     this.imageFile = '';
     if('marked' in changes) {
       if(!changes['marked'].firstChange) {
@@ -61,7 +61,5 @@ export class FieldComponent implements OnInit, OnChanges {
         }
       }
     }
-
-    console.log(`=== image`, this.imageFile);
   }
 }

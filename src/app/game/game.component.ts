@@ -1,16 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { Game } from '../core/interfaces/game.interface';
 import { GameScore, GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Global } from '../core/classes/global.class';
 import { Address, Field } from '../core/interfaces/field.interface';
 import { ScoreService } from '../core/services/score.service';
 import { TimerService } from '../core/services/timer.service';
+import { GlobalService } from '../core/services/global.service';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent implements Game {
   selectedLevel: Level;
@@ -19,18 +20,28 @@ export class GameComponent implements Game {
 
   constructor(
     public score: ScoreService,
-    public timer: TimerService
+    public timer: TimerService,
+    private _globalService: GlobalService
   ) {
-    this.selectedLevel = Global.getLevel(LEVELS.HARDCORE);
+    this.selectedLevel = Global.getLevel(LEVELS.MID);
     this.score.init(this.selectedLevel);
     this.gameState = STATES.NOT_STARTED;
     this.finished = false;
     this.matrix = [];
 
-    // this._timer.start();
+    screen.orientation.addEventListener('change', (event) => {
+      console.log(`=== screen change`, (<ScreenOrientation>event.target).type);
+      this._screenOrientation = (<ScreenOrientation>event.target).type;
+      this.selectedLevel = this._rotate(this._screenOrientation, this.selectedLevel);
+      this._globalService.orientation = this._screenOrientation;
+
+      console.log(`=== EVENT SELECTED LEVEL`, this.selectedLevel);
+    });
   }
 
+
   public readonly matrix: Field[][];
+  private _screenOrientation: OrientationType = 'landscape-primary';
 
   public updateGameState(state: GameState): void {
     this.gameState = state.current;
@@ -56,13 +67,35 @@ export class GameComponent implements Game {
     }
   }
 
+  private _rotate(type: OrientationType, level: Level): Level {
+    console.log(`=== rotate`, type, level);
+    const portrait = {
+      row: Global.getLevel(level.name).col,
+      col: Global.getLevel(level.name).row,
+      mines: Global.getLevel(level.name).mines,
+      name: level.name
+    };
+
+    const landscape = {
+      row: Global.getLevel(level.name).row,
+      col: Global.getLevel(level.name).col,
+      mines: Global.getLevel(level.name).mines,
+      name: level.name
+    };
+
+    switch(type.split('-')[0]) {
+      case 'portrait': return portrait;
+      case 'landscape': return landscape;
+      default: return landscape;
+    }
+  }
+
   onStartTimer(): void {
     this.timer.start();
   }
 
   onStopTimer(): void {
     this.timer.stop();
-
   }
 
 }

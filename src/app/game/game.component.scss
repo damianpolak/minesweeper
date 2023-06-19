@@ -1,11 +1,17 @@
 .game {
   display: flex;
-  flex-direction: row;
-  padding: 2.5rem;
+  flex-direction: column;
+  position: absolute;
   background-color: #483e48;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 
   .board {
-    padding-right: 2rem;
+    padding: 2rem;
+    background-color: #50474e;
+    border-radius: 5px;
   }
 
   .score {

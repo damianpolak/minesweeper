@@ -1,7 +1,4 @@
 <div class="game">
-  <div class="board">
-    <app-board [level]="selectedLevel" [finished]="finished" (onGameStateChange)="updateGameState($event)" (onDiscoverCell)="updateGameScore($event)"></app-board>
-  </div>
   <div class="score">
     <span>Game state: {{ gameState }}</span>
     <span>Discovered: {{ score.discoveredPerc }}%</span>
@@ -9,4 +6,9 @@
     <span (click)="onStartTimer()">Start Timer</span>
     <span (click)="onStopTimer()">Stop Timer</span>
   </div>
+
+  <div class="board">
+    <app-board [level]="selectedLevel" [finished]="finished" (onGameStateChange)="updateGameState($event)" (onDiscoverCell)="updateGameScore($event)"></app-board>
+  </div>
+
 </div>

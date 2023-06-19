@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Field, SYMBOLS } from '../interfaces/field.interface';
-import { LEVELS, Level } from '../interfaces/global.interface';
-import { Global } from '../classes/global.class';
+import { Level } from '../interfaces/global.interface';
 
 @Injectable({
   providedIn: 'root'

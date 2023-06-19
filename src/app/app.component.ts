@@ -8,9 +8,6 @@ import { Global } from './core/classes/global.class';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  // public selectedLevel: Level;
-
   constructor() {
-    // this.selectedLevel = Global.getLevel(LEVELS.LOW);
   }
 }

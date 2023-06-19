@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnI
 import { GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Address, Field, SYMBOLS } from '../core/interfaces/field.interface';
 import { Global } from '../core/classes/global.class';
+import { GlobalService } from '../core/services/global.service';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardComponent implements OnInit, OnChanges {
 
@@ -23,14 +23,17 @@ export class BoardComponent implements OnInit, OnChanges {
   private _row: number = 0;
   public addressClicked: Address = { row: 0, col: 0};
 
-  constructor() {}
+  constructor(private _globalService: GlobalService) {
+  }
 
   ngOnInit(): void {
     console.log(`=== level`, this.level);
     this._initializeBoard();
+    console.log(`=== screen`, this._globalService.orientation);
   }
 
   ngOnChanges(simpleChange: SimpleChanges): void {
+    console.log(`=== simpleChanges`, simpleChange);
     if('finished' in simpleChange) {
       this.setGameState(STATES.WIN);
     }
@@ -52,7 +55,8 @@ export class BoardComponent implements OnInit, OnChanges {
           value: SYMBOLS.NONE,
           discovered: false,
           marked: false,
-          addr: { row: row, col: col }
+          addr: { row: row, col: col },
+          hint: false
         }
       }
     }

@@ -21,7 +21,8 @@ export type Field = {
   value: string | number,
   discovered: boolean,
   marked: boolean,
-  addr: Address
+  addr: Address,
+  hint: boolean
 }
 
 export type Address = {
