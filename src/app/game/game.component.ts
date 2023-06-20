@@ -11,7 +11,6 @@ import { GlobalService } from '../core/services/global.service';
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent implements Game {
   selectedLevel: Level;
@@ -23,19 +22,16 @@ export class GameComponent implements Game {
     public timer: TimerService,
     private _globalService: GlobalService
   ) {
-    this.selectedLevel = Global.getLevel(LEVELS.MID);
+    this.selectedLevel = Global.getLevel(LEVELS.LOW);
     this.score.init(this.selectedLevel);
     this.gameState = STATES.NOT_STARTED;
     this.finished = false;
     this.matrix = [];
 
     screen.orientation.addEventListener('change', (event) => {
-      console.log(`=== screen change`, (<ScreenOrientation>event.target).type);
       this._screenOrientation = (<ScreenOrientation>event.target).type;
       this.selectedLevel = this._rotate(this._screenOrientation, this.selectedLevel);
       this._globalService.orientation = this._screenOrientation;
-
-      console.log(`=== EVENT SELECTED LEVEL`, this.selectedLevel);
     });
   }
 
@@ -64,6 +60,14 @@ export class GameComponent implements Game {
 
     if(this.score.discoveredPerc == 100) {
       this.finished = true;
+    }
+  }
+
+  public updateMinesFlagged(marked: boolean): void {
+    console.log(`=== updateMinesFlagged`, marked);
+    switch(marked) {
+      case true: { this.score.flagIncrement(); } break;
+      case false: { this.score.flagDecrement(); } break;
     }
   }
 

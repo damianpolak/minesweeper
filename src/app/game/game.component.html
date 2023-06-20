@@ -1,13 +1,19 @@
 <div class="game">
   <div class="score">
     <div style="display: flex; gap: 1rem; padding: 1rem;">
-      <span>Mines = </span>
+      <span>Mines = {{ score.mines }} </span>
       <span>Timer = {{ timer.count }}</span>
     </div>
   </div>
 
   <div class="board">
-    <app-board [level]="selectedLevel" [finished]="finished" (onGameStateChange)="updateGameState($event)" (onDiscoverCell)="updateGameScore($event)"></app-board>
+    <app-board
+      [level]="selectedLevel"
+      [finished]="finished"
+      (onGameStateChange)="updateGameState($event)"
+      (onDiscoverCell)="updateGameScore($event)"
+      (onMarkCell)="updateMinesFlagged($event)"
+    ></app-board>
   </div>
 
 </div>
