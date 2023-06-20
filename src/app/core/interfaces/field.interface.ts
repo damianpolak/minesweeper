@@ -7,6 +7,7 @@ export interface FieldSize {
 
 export enum SYMBOLS {
   MINE = '*',
+  MINERED = '@',
   NONE = 0,
   ONE = 1,
   TWO = 2,

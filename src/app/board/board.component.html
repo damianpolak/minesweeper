@@ -1,6 +1,6 @@
 <div *ngIf="boardReady" class="board">
   <div *ngFor="let row of matrix; let r = index" class="board-row">
-    <div *ngFor="let field of row; let c = index" class="board-field" (click)="onPlayerClick($event, field)" (contextmenu)="onPlayerRightClick($event, field)">
+    <div *ngFor="let field of row; let c = index" class="board-field" (click)="onPlayerClick($event, field)" (contextmenu)="onPlayerRightClick($event, field)" [attr.data-addr]="field.addr.row + ',' + field.addr.col">
       <app-field [value]="field.value" [marked]="field.marked" [discovered]="field.discovered" [squareSize]="35"></app-field>
     </div>
   </div>

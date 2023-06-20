@@ -89,13 +89,4 @@ export class GameComponent implements Game {
       default: return landscape;
     }
   }
-
-  onStartTimer(): void {
-    this.timer.start();
-  }
-
-  onStopTimer(): void {
-    this.timer.stop();
-  }
-
 }

@@ -1,10 +1,9 @@
 <div class="game">
   <div class="score">
-    <span>Game state: {{ gameState }}</span>
-    <span>Discovered: {{ score.discoveredPerc }}%</span>
-    <span>Timer: {{ timer.count }}</span>
-    <span (click)="onStartTimer()">Start Timer</span>
-    <span (click)="onStopTimer()">Stop Timer</span>
+    <div style="display: flex; gap: 1rem; padding: 1rem;">
+      <span>Mines = </span>
+      <span>Timer = {{ timer.count }}</span>
+    </div>
   </div>
 
   <div class="board">

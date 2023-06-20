@@ -41,7 +41,11 @@ export class FieldComponent implements OnInit, OnChanges {
             this.imageFile = this.imagePath + 'block.png';
         }
       } else {
-        this.imageFile = this.imagePath + 'block.png';
+        if(!this.marked) {
+          this.imageFile = this.imagePath + 'block.png';
+        } else {
+          this.imageFile = this.imagePath + 'flag.png';
+        }
       }
     }
 
@@ -58,6 +62,7 @@ export class FieldComponent implements OnInit, OnChanges {
           case 7: { this.imageFile = this.imagePath + '7.png'; } break;
           case 8: { this.imageFile = this.imagePath + '8.png'; } break;
           case '*': { this.imageFile = this.imagePath + 'bomb.png'; } break;
+          case '@': { this.imageFile = this.imagePath + 'bombred.png'; } break;
         }
       }
     }

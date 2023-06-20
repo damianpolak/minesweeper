@@ -116,6 +116,7 @@ export class BoardComponent implements OnInit, OnChanges {
 
     if (this.getGameState() === STATES.RUNNING) {
       if (this.isFieldMined(addr.row, addr.col)) {
+        this.matrix[addr.row][addr.col].value = SYMBOLS.MINERED;
         this._discoverMinedFields();
         this.setGameState(STATES.LOSE);
       }
@@ -132,8 +133,10 @@ export class BoardComponent implements OnInit, OnChanges {
 
   public onPlayerRightClick(event: any, field: Field): void {
     event.preventDefault();
-    console.log(`=== onPlayerRightClick`, event);
-    this._toggleFieldAsMarked(field);
+    if(this.getGameState() != STATES.LOSE && !field.discovered) {
+      console.log(`=== onPlayerRightClick`, event);
+      this._toggleFieldAsMarked(field);
+    }
   }
 
   public firstClick(addr: Address): boolean {
@@ -235,7 +238,9 @@ export class BoardComponent implements OnInit, OnChanges {
 
 
   public discoverNumberedFields(x: number, y: number) {
+    console.log(`=== discoverNumberedFields = ${x},${y}`);
     this.matrix[x][y].discovered = true;
+    this.matrix[x][y].marked = false;
     this.onDiscoverCell.emit({ row: x, col: y });
 
     return [x, y];
@@ -255,6 +260,7 @@ export class BoardComponent implements OnInit, OnChanges {
     if (this.testMatrixEdges(x, y)) {
       if (this.matrix[x][y].value == 0 && this.isFieldDiscovered(x, y) == false) {
         this.matrix[x][y].discovered = true;
+        this.matrix[x][y].marked = false;
         this.onDiscoverCell.emit({ row: x, col: y });
 
         /*
@@ -279,7 +285,7 @@ export class BoardComponent implements OnInit, OnChanges {
         this.discoverEmptyFields(x - 1, y - 1); //       case_a: { x: x - 1, y: y - 1 },
         this.discoverEmptyFields(x + 1, y - 1); // case_c: { x: x + 1, y: y - 1 },
       } else if (
-        this.matrix[x][y].value != 0 &&
+        this.matrix[x][y].value != SYMBOLS.NONE &&
         this.isFieldNumbered(x, y) == true &&
         this.isFieldDiscovered(x, y) == false
       ) {
