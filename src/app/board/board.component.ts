@@ -3,6 +3,7 @@ import { GameState, LEVELS, Level, STATES } from '../core/interfaces/global.inte
 import { Address, Field, SYMBOLS } from '../core/interfaces/field.interface';
 import { Global } from '../core/classes/global.class';
 import { GlobalService } from '../core/services/global.service';
+import { ScoreService } from '../core/services/score.service';
 
 @Component({
   selector: 'app-board',
@@ -12,10 +13,9 @@ import { GlobalService } from '../core/services/global.service';
 export class BoardComponent implements OnInit, OnChanges {
 
   @Input() level: Level = { name: LEVELS.LOW, row: 10, col: 10, mines: 5 };
-  @Input() finished: boolean = false;
+  @Input() newGame: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onGameStateChange = new EventEmitter<GameState>();
-  @Output() onDiscoverCell = new EventEmitter<Address>();
-  @Output() onMarkCell = new EventEmitter<boolean>();
+
 
   public boardReady: boolean = false;
   public matrix: Field[][] = [];
@@ -24,16 +24,38 @@ export class BoardComponent implements OnInit, OnChanges {
   private _row: number = 0;
   public addressClicked: Address = { row: 0, col: 0};
 
-  constructor(private _globalService: GlobalService) {
-  }
+  constructor(
+    private _globalService: GlobalService,
+    private _score: ScoreService
+    ) {}
 
   ngOnInit(): void {
     this._initializeBoard();
+
+    // new game subs
+
+    this.newGame.subscribe(result => {
+      console.log(`=== Subscribe new game`, result);
+      this.testNewGame();
+    })
+  }
+
+  public testNewGame(): void {
+    this._initializeBoard();
+
+    this.setGameState(STATES.NOT_STARTED);
+    console.log(`=== newGame`, this.newGame);
   }
 
   ngOnChanges(simpleChange: SimpleChanges): void {
-    if('finished' in simpleChange) {
-      this.setGameState(STATES.WIN);
+    if('newGame' in simpleChange) {
+      console.log(`=== simpleChangeNewGame`, simpleChange['newGame']);
+      if(!simpleChange['newGame'].firstChange && simpleChange['newGame'].currentValue == true) {
+        this._initializeBoard();
+        // this.newGame = false;
+        // this.setGameState(STATES.NOT_STARTED);
+        console.log(`=== newGame 123`, this.newGame)
+      }
     }
   }
 
@@ -61,7 +83,7 @@ export class BoardComponent implements OnInit, OnChanges {
 
     this._setMines(this.level.mines);
     this.setGameState(STATES.NOT_STARTED);
-
+    this._score.init(this.level);
     this.boardReady = true;
   }
 
@@ -93,7 +115,8 @@ export class BoardComponent implements OnInit, OnChanges {
 
   public onPlayerClick(event: any, field: Field): void {
   // public onPlayerClick(event: any, obj: Field,row: number, col: number): void {
-    if(!this.finished && this.getGameState() != STATES.LOSE) {
+    if(![STATES.LOSE, STATES.WIN].includes(this.getGameState())) {
+    // if(!this.finished && this.getGameState() != STATES.LOSE) {
       if(!field.discovered && !field.marked) {
         this.addressClicked = { row: field.addr.row, col: field.addr.col };
         this.playerClick(this.addressClicked);
@@ -125,11 +148,16 @@ export class BoardComponent implements OnInit, OnChanges {
       if (this._isFieldNumbered(addr.row, addr.col)) {
         this.discoverNumberedFields(addr.row, addr.col);
       }
+
+      if(this._score.discovered >= 100) {
+        this.setGameState(STATES.WIN);
+      }
     }
   }
 
   public onPlayerRightClick(event: any, field: Field): void {
     event.preventDefault();
+    console.log(`=== right click`);
     if(this.getGameState() != STATES.LOSE && !field.discovered) {
       this._toggleFieldAsMarked(field);
     }
@@ -241,10 +269,12 @@ export class BoardComponent implements OnInit, OnChanges {
 
     if(this._isFieldMarked(x, y)) {
       this.matrix[x][y].marked = false;
-      this.onMarkCell.emit(this.matrix[x][y].marked);
+      // this.onMarkCell.emit(this.matrix[x][y].marked);
+      this._score.flagDecrement();
     }
 
-    this.onDiscoverCell.emit({ row: x, col: y });
+    // this.onDiscoverCell.emit({ row: x, col: y });
+    this._score.increment();
 
     return [x, y];
   };
@@ -253,8 +283,16 @@ export class BoardComponent implements OnInit, OnChanges {
     this.matrix.forEach(row => {
       row.forEach(cell => {
         if(cell.addr === field.addr) {
+          console.log(`=== marked`, cell.addr);
           cell.marked = cell.marked ? false : true;
-          this.onMarkCell.emit(cell.marked);
+
+          // this.onMarkCell.emit(cell.marked);
+
+          if(cell.marked) {
+            this._score.flagIncrement();
+          } else {
+            this._score.flagDecrement();
+          }
         }
       })
     })
@@ -267,10 +305,12 @@ export class BoardComponent implements OnInit, OnChanges {
 
         if(this._isFieldMarked(x, y)) {
           this.matrix[x][y].marked = false;
-          this.onMarkCell.emit(this.matrix[x][y].marked);
+          // this.onMarkCell.emit(this.matrix[x][y].marked);
+          this._score.flagDecrement();
         }
 
-        this.onDiscoverCell.emit({ row: x, col: y });
+        // this.onDiscoverCell.emit({ row: x, col: y });
+        this._score.increment();
 
         /*
           case_a: { x: x - 1, y: y - 1 },

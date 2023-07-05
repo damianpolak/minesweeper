@@ -15,11 +15,112 @@
     border-radius: 5px;
   }
 
+  // .score {
+  //   position: absolute;
+  //   top: 0;
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   width: 100%;
+  //   background-color: #50474e;
+  //   // padding: 0 2rem 0 2rem;
+  //   cursor: default;
+  //   text-shadow: 2px 2px #2c0c0c;
+  //   user-select: none;
+  // }
+
   .score {
+    // overflow: hidden;
+    // background-color: #333;
+    position: absolute;
+    top: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
     width: 100%;
     background-color: #50474e;
+    // padding: 0 2rem 0 2rem;
+    cursor: default;
+    text-shadow: 2px 2px #2c0c0c;
+    user-select: none;
+  }
+
+  .score span {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .dropdown {
+    float: left;
+    overflow: hidden;
+  }
+
+  .dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    text-shadow: 2px 2px #2c0c0c;
+  }
+
+  .score span.active:hover, .dropdown:hover .dropbtn {
+    cursor: pointer;
+    background-color: rgb(99, 99, 99);
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #50474e;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content span {
+    float: none;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content span:hover {
+    background-color: rgb(99, 99, 99);
+    cursor: pointer;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  // ---
+
+  .message {
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 2px 2px #2c0c0c;
+  }
+
+  .debug {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+
+  .no-more-events, .message, .board {
+    pointer-events: none;
+    user-select: none;
   }
 }

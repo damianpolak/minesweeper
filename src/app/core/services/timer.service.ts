@@ -27,4 +27,9 @@ export class TimerService {
   public clear(): void {
     this._count = 0;
   }
+
+  public restart(): void {
+    this.stop();
+    this.clear();
+  }
 }

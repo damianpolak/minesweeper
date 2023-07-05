@@ -20,6 +20,7 @@ export class ScoreService {
   }
 
   get discoveredPerc(): number {
+    console.log(`=== discovered perc`, Math.round((100 * this._discovered) / this._toDiscover));
     return Math.round((100 * this._discovered) / this._toDiscover);
   }
 
@@ -37,6 +38,7 @@ export class ScoreService {
 
   public increment(): number {
     this._discovered++;
+    console.log(`=== disco`, this._discovered);
     return this._discovered;
   }
 
@@ -48,5 +50,12 @@ export class ScoreService {
   public flagDecrement(): number {
     this._flags--;
     return this._flags;
+  }
+
+  public reset(): void {
+    this._discovered = 0;
+    this._toDiscover = 0;
+    this._mines = 0;
+    this._flags = 0;
   }
 }

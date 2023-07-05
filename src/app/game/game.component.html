@@ -1,19 +1,46 @@
 <div class="game">
+  <div *ngIf="messageEnabled" class="message">
+    {{ message }}
+  </div>
+
+  <div *ngIf="true" class="debug">
+    <p>STATE: {{gameState}} </p>
+  </div>
+
   <div class="score">
+    <span class="active" (click)="onClickNewGame()">New Game</span>
+    <div class="dropdown">
+      <button class="dropbtn">Select Level
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <span *ngFor="let item of menuLevels()">{{ item.id }}</span>
+      </div>
+    </div>
+    <span>Mines = {{ score.mines }}</span>
+    <span>Timer = {{ timer.count }}</span>
+    <span>Level = {{ selectedLevel.name }}</span>
+
+  </div>
+
+  <!-- <div class="score">
     <div style="display: flex; gap: 1rem; padding: 1rem;">
-      <span>Mines = {{ score.mines }} </span>
+      <span (click)="onClickNewGame()">New Game</span> |
+      <span>Select Level</span> |
+      <span>Mines = {{ score.mines }}</span> |
       <span>Timer = {{ timer.count }}</span>
     </div>
-  </div>
+  </div> -->
 
-  <div class="board">
+  <div class="board" [ngStyle]="{'pointer-events': 'all'}">
+  <!-- <div class="board" [ngStyle]="{'pointer-events': gameState == 'LOSE' ? 'none' : 'all'}"> -->
     <app-board
       [level]="selectedLevel"
-      [finished]="finished"
       (onGameStateChange)="updateGameState($event)"
-      (onDiscoverCell)="updateGameScore($event)"
-      (onMarkCell)="updateMinesFlagged($event)"
+      [newGame]="onNewGame"
     ></app-board>
+    <!-- [finished]="finished" -->
+    <!-- (onDiscoverCell)="updateGameScore($event)"
+    (onMarkCell)="updateMinesFlagged($event)" -->
   </div>
-
 </div>
