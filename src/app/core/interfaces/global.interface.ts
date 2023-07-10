@@ -21,11 +21,11 @@ export interface GameScore {
 
 export enum LEVELS {
   TEST = 'test',
-  LOW = 'low',
-  MID = 'mid',
-  HARD = 'hard',
-  HARDCORE = 'hardcore',
-  SUPERHARDCORE = 'superhardcore'
+  LOW = 'LOW',
+  MID = 'MID',
+  HARD = 'HARD',
+  HARDCORE = 'HARCORE',
+  SUPERHARDCORE = 'SUPERHARDCORE'
 }
 
 export type Level = {

@@ -10,7 +10,7 @@ import { ScoreService } from '../core/services/score.service';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnInit, OnChanges {
+export class BoardComponent implements OnInit {
 
   @Input() level: Level = { name: LEVELS.LOW, row: 10, col: 10, mines: 5 };
   @Input() newGame: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -32,8 +32,6 @@ export class BoardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this._initializeBoard();
 
-    // new game subs
-
     this.newGame.subscribe(result => {
       console.log(`=== Subscribe new game`, result);
       this.testNewGame();
@@ -45,18 +43,6 @@ export class BoardComponent implements OnInit, OnChanges {
 
     this.setGameState(STATES.NOT_STARTED);
     console.log(`=== newGame`, this.newGame);
-  }
-
-  ngOnChanges(simpleChange: SimpleChanges): void {
-    if('newGame' in simpleChange) {
-      console.log(`=== simpleChangeNewGame`, simpleChange['newGame']);
-      if(!simpleChange['newGame'].firstChange && simpleChange['newGame'].currentValue == true) {
-        this._initializeBoard();
-        // this.newGame = false;
-        // this.setGameState(STATES.NOT_STARTED);
-        console.log(`=== newGame 123`, this.newGame)
-      }
-    }
   }
 
   private _initializeBoard(): void {

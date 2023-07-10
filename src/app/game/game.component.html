@@ -14,7 +14,7 @@
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-content">
-        <span *ngFor="let item of menuLevels()">{{ item.id }}</span>
+        <span *ngFor="let item of menuLevels()" (click)="onClickSelectLevel(item.id)">{{ item.id }}</span>
       </div>
     </div>
     <span>Mines = {{ score.mines }}</span>

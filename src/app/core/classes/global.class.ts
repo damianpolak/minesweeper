@@ -11,7 +11,7 @@ export class Global {
     // { name: LEVELS.HARDCORE, row: 20, col: 42, mines: 180 }
   ];
 
-  public static getLevel(name: LEVELS): Level {
+  public static getLevel(name: LEVELS | string): Level {
     const level = this._levels.filter((i: Level) => {
       return i.name === name
     });
