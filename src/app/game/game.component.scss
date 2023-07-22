@@ -10,28 +10,12 @@
   align-items: center;
 
   .board {
-    padding: 2rem;
+    padding: 0.5rem;
     background-color: #50474e;
     border-radius: 5px;
   }
 
-  // .score {
-  //   position: absolute;
-  //   top: 0;
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
-  //   width: 100%;
-  //   background-color: #50474e;
-  //   // padding: 0 2rem 0 2rem;
-  //   cursor: default;
-  //   text-shadow: 2px 2px #2c0c0c;
-  //   user-select: none;
-  // }
-
   .score {
-    // overflow: hidden;
-    // background-color: #333;
     position: absolute;
     top: 0;
     display: flex;
@@ -40,7 +24,6 @@
     justify-content: center;
     width: 100%;
     background-color: #50474e;
-    // padding: 0 2rem 0 2rem;
     cursor: default;
     text-shadow: 2px 2px #2c0c0c;
     user-select: none;

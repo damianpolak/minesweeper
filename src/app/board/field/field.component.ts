@@ -8,8 +8,6 @@ import { FieldSize } from 'src/app/core/interfaces/field.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FieldComponent implements OnInit, OnChanges {
-
-  // Input - status hidden/visible
   @Input() value: string | number = '';
   @Input() squareSize?: number;
   @Input() discovered: boolean = false;

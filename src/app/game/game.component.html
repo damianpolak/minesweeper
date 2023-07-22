@@ -3,7 +3,7 @@
     {{ message }}
   </div>
 
-  <div *ngIf="true" class="debug">
+  <div *ngIf="true" class="debug" style="display: none">
     <p>STATE: {{gameState}} </p>
   </div>
 
@@ -23,24 +23,11 @@
 
   </div>
 
-  <!-- <div class="score">
-    <div style="display: flex; gap: 1rem; padding: 1rem;">
-      <span (click)="onClickNewGame()">New Game</span> |
-      <span>Select Level</span> |
-      <span>Mines = {{ score.mines }}</span> |
-      <span>Timer = {{ timer.count }}</span>
-    </div>
-  </div> -->
-
-  <div class="board" [ngStyle]="{'pointer-events': 'all'}">
-  <!-- <div class="board" [ngStyle]="{'pointer-events': gameState == 'LOSE' ? 'none' : 'all'}"> -->
+  <div class="board" [ngStyle]="{'pointer-events': ['LOSE','WIN'].includes(gameState) ? 'none' : 'all'}">
     <app-board
       [level]="selectedLevel"
       (onGameStateChange)="updateGameState($event)"
       [newGame]="onNewGame"
     ></app-board>
-    <!-- [finished]="finished" -->
-    <!-- (onDiscoverCell)="updateGameScore($event)"
-    (onMarkCell)="updateMinesFlagged($event)" -->
   </div>
 </div>

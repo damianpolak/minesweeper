@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { Game } from '../core/interfaces/game.interface';
+import { Component, EventEmitter } from '@angular/core';
+import { Game, Menu } from '../core/interfaces/game.interface';
 import { GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Global } from '../core/classes/global.class';
 import { Field } from '../core/interfaces/field.interface';
@@ -11,9 +11,14 @@ import { TimerService } from '../core/services/timer.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
-export class GameComponent implements Game, OnInit {
+export class GameComponent implements Game {
   selectedLevel: Level;
   gameState: STATES;
+
+  public readonly matrix: Field[][];
+  public onNewGame: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public messageEnabled: boolean = false;
+  public message: string = '';
 
   constructor(
     public score: ScoreService,
@@ -25,20 +30,14 @@ export class GameComponent implements Game, OnInit {
     this.matrix = [];
   }
 
-  ngOnInit(): void {
-  }
-
-  public readonly matrix: Field[][];
-
-  public messageEnabled: boolean = false;
-  public message: string = '';
-
+  /**
+   * Update game state, reset score and timer.
+   */
   public updateGameState(state: GameState): void {
     this.gameState = state.current;
 
     switch(this.gameState) {
       case STATES.NOT_STARTED: {
-        console.log(`=== NOT_STARTED`);
         this.messageEnabled = false;
         this.timer.restart();
         this.score.reset();
@@ -48,14 +47,12 @@ export class GameComponent implements Game, OnInit {
         this.timer.start();
       } break;
       case STATES.WIN: {
-        console.log(`=== WIN`);
         this.message = 'You win!';
         this.messageEnabled = true;
         this.timer.stop();
         this.score.reset();
       } break;
       case STATES.LOSE: {
-        console.log(`=== LOSE`);
         this.messageEnabled = true;
         this.message = 'You lose!';
         this.timer.stop();
@@ -63,18 +60,24 @@ export class GameComponent implements Game, OnInit {
     }
   }
 
-  public onNewGame: EventEmitter<boolean> = new EventEmitter<boolean>();
+  /**
+   * Fires when user click new game and emit new game to board component.
+   */
   public onClickNewGame(): void {
-    console.log(`=== newGame()`);
     this.onNewGame.emit(true);
   }
 
+  /**
+   * Fires when user select level.
+   */
   public onClickSelectLevel(level: string): void {
-    console.log(`=== selectLevel`, level);
     this.selectedLevel = Global.getLevel(level);
   }
 
-  public menuLevels(): Array<{ id: string }> {
+  /**
+   * Returns builded menu levels.
+   */
+  public menuLevels(): Menu[] {
     return Object.keys(LEVELS).map(item => {
       return {
         id: item

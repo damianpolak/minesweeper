@@ -1,7 +1,6 @@
 .board {
   display: flex;
   flex-direction: column;
-  // background-color: pink;
 
   .board-row {
     display: flex;
@@ -12,15 +11,7 @@
       justify-content: center;
       text-align: center;
       background-color: silver;
-      // padding: 10px;
       cursor: default;
     }
   }
-
-
-}
-
-.test {
-  background-color: aqua;
-  margin: 1rem;
 }

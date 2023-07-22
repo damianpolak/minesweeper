@@ -20,17 +20,20 @@ export interface GameScore {
 }
 
 export enum LEVELS {
-  TEST = 'test',
   LOW = 'LOW',
   MID = 'MID',
   HARD = 'HARD',
-  HARDCORE = 'HARCORE',
+  HARDCORE = 'HARDCORE',
   SUPERHARDCORE = 'SUPERHARDCORE'
 }
 
-export type Level = {
+export type Difficulty = {
   name: LEVELS,
   row: number,
   col: number,
+  difficultyInd: number,
+}
+
+export interface Level extends Difficulty {
   mines: number
 }

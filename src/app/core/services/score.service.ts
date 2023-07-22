@@ -11,6 +11,8 @@ export class ScoreService {
   private _mines: number = 0;
   private _flags: number = 0;
 
+  constructor() { }
+
   get discovered(): number {
     return this._discovered;
   }
@@ -28,30 +30,43 @@ export class ScoreService {
     return this._mines - this._flags;
   }
 
-  constructor() { }
-
+  /**
+   * Just inits score.
+   */
   public init(level: Level): void {
     const selectedLevel = level;
     this._toDiscover = (selectedLevel.row * selectedLevel.col) - selectedLevel.mines;
     this._mines = level.mines;
   }
 
+  /**
+   * Increments score.
+   */
   public increment(): number {
     this._discovered++;
     console.log(`=== disco`, this._discovered);
     return this._discovered;
   }
 
+  /**
+   * Increments flag counter.
+   */
   public flagIncrement(): number {
     this._flags++;
     return this._flags;
   }
 
+  /**
+   * Decrements flag counter.
+   */
   public flagDecrement(): number {
     this._flags--;
     return this._flags;
   }
 
+  /**
+   * Resets the result.
+   */
   public reset(): void {
     this._discovered = 0;
     this._toDiscover = 0;
