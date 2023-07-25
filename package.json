@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build-ghpages": "ng build --configuration production --base-href https://damianpolak.github.io/minesweeper/",
+    "deploy-ghpages": "ngh --dir=dist/minesweeper",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
