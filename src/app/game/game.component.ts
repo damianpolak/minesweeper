@@ -5,6 +5,7 @@ import { Global } from '../core/classes/global.class';
 import { Field } from '../core/interfaces/field.interface';
 import { ScoreService } from '../core/services/score.service';
 import { TimerService } from '../core/services/timer.service';
+import { TableScoreService } from '../core/services/table-score.service';
 
 @Component({
   selector: 'app-game',
@@ -22,7 +23,8 @@ export class GameComponent implements Game {
 
   constructor(
     public score: ScoreService,
-    public timer: TimerService
+    public timer: TimerService,
+    private _tableScore: TableScoreService
   ) {
     this.selectedLevel = Global.getLevel(LEVELS.LOW);
     this.score.init(this.selectedLevel);
@@ -50,12 +52,31 @@ export class GameComponent implements Game {
         this.message = 'You win!';
         this.messageEnabled = true;
         this.timer.stop();
+
+        this._tableScore.add({
+          type: 'LOSE',
+          level: this.selectedLevel.name,
+          time: this.timer.count,
+          scorePerc: this.score.discoveredPerc,
+          timestamp: new Date()
+        });
+
         this.score.reset();
       } break;
       case STATES.LOSE: {
         this.messageEnabled = true;
         this.message = 'You lose!';
         this.timer.stop();
+
+        this._tableScore.add({
+          type: 'LOSE',
+          level: this.selectedLevel.name,
+          time: this.timer.count,
+          scorePerc: this.score.discoveredPerc,
+          timestamp: new Date()
+        });
+
+        this.score.reset();
       }
     }
   }

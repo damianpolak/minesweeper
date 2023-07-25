@@ -7,13 +7,15 @@ import { BoardComponent } from './board/board.component';
 import { FieldComponent } from './board/field/field.component';
 import { GameComponent } from './game/game.component';
 import { GlobalService } from './core/services/global.service';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
     FieldComponent,
-    GameComponent
+    GameComponent,
+    StartComponent
   ],
   imports: [
     BrowserModule,
