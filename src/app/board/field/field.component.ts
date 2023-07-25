@@ -14,7 +14,7 @@ export class FieldComponent implements OnInit, OnChanges {
   @Input() marked: boolean = false;
   @Input() hint: boolean = false;
 
-  public imagePath: string = '/assets/gfx/';
+  public imagePath: string = 'assets/gfx/';
   public imageFile: string = '';
 
   ngOnInit(): void {
