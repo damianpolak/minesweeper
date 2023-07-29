@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GameState, LEVELS, Level, STATES } from '../core/interfaces/global.interface';
 import { Address, Field, SYMBOLS } from '../core/interfaces/field.interface';
 import { Global } from '../core/classes/global.class';
-import { GlobalService } from '../core/services/global.service';
 import { ScoreService } from '../core/services/score.service';
 import { TestCase } from '../core/interfaces/board.interface';
 
@@ -161,7 +160,7 @@ export class BoardComponent implements OnInit {
         this._discoverNumberedFields(addr.row, addr.col);
       }
 
-      if(this._score.discovered >= 100) {
+      if(this._score.discoveredPerc >= 100) {
         this.setGameState(STATES.WIN);
       }
     }

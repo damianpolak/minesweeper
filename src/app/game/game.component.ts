@@ -60,8 +60,6 @@ export class GameComponent implements Game {
           scorePerc: this.score.discoveredPerc,
           timestamp: new Date()
         });
-
-        this.score.reset();
       } break;
       case STATES.LOSE: {
         this.messageEnabled = true;
@@ -75,8 +73,6 @@ export class GameComponent implements Game {
           scorePerc: this.score.discoveredPerc,
           timestamp: new Date()
         });
-
-        this.score.reset();
       }
     }
   }
@@ -93,6 +89,9 @@ export class GameComponent implements Game {
    */
   public onClickSelectLevel(level: string): void {
     this.selectedLevel = Global.getLevel(level);
+    setTimeout(() => {
+      this.onNewGame.emit(true);
+    });
   }
 
   /**

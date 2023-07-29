@@ -1,12 +1,4 @@
-<div class="game">
-  <div *ngIf="messageEnabled" class="message">
-    {{ message }}
-  </div>
-
-  <div *ngIf="true" class="debug" style="display: none">
-    <p>STATE: {{gameState}} </p>
-  </div>
-
+<div class="container">
   <div class="score">
     <span class="active" (click)="onClickNewGame()">New Game</span>
     <div class="dropdown">
@@ -20,14 +12,19 @@
     <span>Mines = {{ score.mines }}</span>
     <span>Timer = {{ timer.count }}</span>
     <span>Level = {{ selectedLevel.name }}</span>
-
   </div>
+  <div class="game">
+    <div *ngIf="messageEnabled" class="message">
+      {{ message }}
+    </div>
 
-  <div class="board" [ngStyle]="{'pointer-events': ['LOSE','WIN'].includes(gameState) ? 'none' : 'all'}">
-    <app-board
-      [level]="selectedLevel"
-      (onGameStateChange)="updateGameState($event)"
-      [newGame]="onNewGame"
-    ></app-board>
+    <div class="board" [ngStyle]="{'pointer-events': ['LOSE','WIN'].includes(gameState) ? 'none' : 'all'}">
+      <app-board
+        [level]="selectedLevel"
+        (onGameStateChange)="updateGameState($event)"
+        [newGame]="onNewGame"
+      ></app-board>
+    </div>
   </div>
 </div>
+

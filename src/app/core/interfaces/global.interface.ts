@@ -24,7 +24,7 @@ export enum LEVELS {
   MID = 'MID',
   HARD = 'HARD',
   HARDCORE = 'HARDCORE',
-  SUPERHARDCORE = 'SUPERHARDCORE'
+  // SUPERHARDCORE = 'SUPERHARDCORE'
 }
 
 export type Difficulty = {
