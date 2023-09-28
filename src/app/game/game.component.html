@@ -1,24 +1,35 @@
 <div class="container">
-  <div class="score">
-    <span class="active" (click)="onClickNewGame()">New Game</span>
-    <div class="dropdown">
-      <button class="dropbtn">Select Level
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="dropdown-content">
-        <span *ngFor="let item of menuLevels()" (click)="onClickSelectLevel(item.id)">{{ item.id }}</span>
+  <div class="game">
+    <div class="score2">
+      <div class="score2-mines">
+        <div class="score2-mines-top">
+          MINES
+        </div>
+        <div class="score2-mines-bottom">{{ score.mines }}</div>
+        <!-- <span class="score2-toggle-lvl" (click)="toggleMenu()">Menu Levels</span> -->
+        <!-- <span>{{ timer.count }}</span> -->
+      </div>
+
+      <div class="score2-face" (click)="toggleMenu()"><img [src]="face.currentFacePath" [style.width.rem]="3"></div>
+
+      <div class="score2-time">
+        <div class="score2-time-top">
+          TIME
+        </div>
+        <div class="score2-time-bottom">
+          {{ timer.count }}
+        </div>
       </div>
     </div>
-    <span>Mines = {{ score.mines }}</span>
-    <span>Timer = {{ timer.count }}</span>
-    <span>Level = {{ selectedLevel.name }}</span>
-  </div>
-  <div class="game">
+      <div class="score2-levels" [ngStyle]="{'visibility': displayMenu ? 'visible' : 'hidden'}">
+        <span *ngFor="let item of menuLevels()" (click)="onClickSelectLevel(item.id)">{{ item.id }}</span>
+      </div>
     <div *ngIf="messageEnabled" class="message">
       {{ message }}
+      <span (click)="onClickNewGame()">Play again?</span>
     </div>
 
-    <div class="board" [ngStyle]="{'pointer-events': ['LOSE','WIN'].includes(gameState) ? 'none' : 'all'}">
+    <div class="board" [ngStyle]="{'pointer-events': ['LOSE','WIN'].includes(global.gameState) ? 'none' : 'all'}">
       <app-board
         [level]="selectedLevel"
         (onGameStateChange)="updateGameState($event)"
@@ -26,5 +37,7 @@
       ></app-board>
     </div>
   </div>
+
+  <!-- <div class="blackened"></div> -->
 </div>
 

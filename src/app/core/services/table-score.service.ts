@@ -6,7 +6,7 @@ import { Score } from '../interfaces/score.interface';
 })
 export class TableScoreService {
 
-  private _storageKey = 'angular-minesweeper';
+  private _storageKey = 'minesweeper-table';
 
   constructor(){ }
 

@@ -9,7 +9,6 @@ export class Global {
     { name: LEVELS.MID, row: 16, col: 16, difficultyInd: 15.5 },
     { name: LEVELS.HARD, row: 16, col: 30, difficultyInd: 18 },
     { name: LEVELS.HARDCORE, row: 20, col: 42, difficultyInd: 20 },
-    // { name: LEVELS.SUPERHARDCORE, row: 32, col: 54, difficultyInd: 25 },
   ];
 
   /**

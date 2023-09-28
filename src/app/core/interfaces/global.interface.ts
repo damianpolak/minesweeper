@@ -24,7 +24,6 @@ export enum LEVELS {
   MID = 'MID',
   HARD = 'HARD',
   HARDCORE = 'HARDCORE',
-  // SUPERHARDCORE = 'SUPERHARDCORE'
 }
 
 export type Difficulty = {
@@ -36,4 +35,9 @@ export type Difficulty = {
 
 export interface Level extends Difficulty {
   mines: number
+}
+
+export interface StorageConfig {
+  level: LEVELS,
+  debugMode: boolean | 'YES PLEASE!'
 }

@@ -6,6 +6,8 @@ import { Field } from '../core/interfaces/field.interface';
 import { ScoreService } from '../core/services/score.service';
 import { TimerService } from '../core/services/timer.service';
 import { TableScoreService } from '../core/services/table-score.service';
+import { FaceService } from '../core/services/face.service';
+import { GlobalService } from '../core/services/global.service';
 
 @Component({
   selector: 'app-game',
@@ -14,21 +16,26 @@ import { TableScoreService } from '../core/services/table-score.service';
 })
 export class GameComponent implements Game {
   selectedLevel: Level;
-  gameState: STATES;
+  // gameState: STATES;
 
   public readonly matrix: Field[][];
   public onNewGame: EventEmitter<boolean> = new EventEmitter<boolean>();
   public messageEnabled: boolean = false;
   public message: string = '';
+  // public message2: string = 'Play again?';
+  public displayMenu: boolean = false;
 
   constructor(
     public score: ScoreService,
     public timer: TimerService,
+    public face: FaceService,
+    public global: GlobalService,
     private _tableScore: TableScoreService
   ) {
-    this.selectedLevel = Global.getLevel(LEVELS.LOW);
+    this.global.initConfig();
+    this.selectedLevel = Global.getLevel(this.global.level);
     this.score.init(this.selectedLevel);
-    this.gameState = STATES.NOT_STARTED;
+    this.global.gameState = STATES.NOT_STARTED;
     this.matrix = [];
   }
 
@@ -36,9 +43,9 @@ export class GameComponent implements Game {
    * Update game state, reset score and timer.
    */
   public updateGameState(state: GameState): void {
-    this.gameState = state.current;
+    this.global.gameState = state.current;
 
-    switch(this.gameState) {
+    switch(this.global.gameState) {
       case STATES.NOT_STARTED: {
         this.messageEnabled = false;
         this.timer.restart();
@@ -52,11 +59,12 @@ export class GameComponent implements Game {
         this.message = 'You win!';
         this.messageEnabled = true;
         this.timer.stop();
+        this.face.onFaceWinner();
 
         this._tableScore.add({
           type: 'LOSE',
           level: this.selectedLevel.name,
-          time: this.timer.count,
+          time: Number(this.timer.count),
           scorePerc: this.score.discoveredPerc,
           timestamp: new Date()
         });
@@ -65,11 +73,12 @@ export class GameComponent implements Game {
         this.messageEnabled = true;
         this.message = 'You lose!';
         this.timer.stop();
+        this.face.onFaceLoser();
 
         this._tableScore.add({
           type: 'LOSE',
           level: this.selectedLevel.name,
-          time: this.timer.count,
+          time: Number(this.timer.count),
           scorePerc: this.score.discoveredPerc,
           timestamp: new Date()
         });
@@ -88,9 +97,11 @@ export class GameComponent implements Game {
    * Fires when user select level.
    */
   public onClickSelectLevel(level: string): void {
-    this.selectedLevel = Global.getLevel(level);
+    this.global.level = level as LEVELS;
+    this.selectedLevel = Global.getLevel(this.global.config.level);
     setTimeout(() => {
       this.onNewGame.emit(true);
+      this.displayMenu = false;
     });
   }
 
@@ -103,5 +114,9 @@ export class GameComponent implements Game {
         id: item
       }
     })
+  }
+
+  public toggleMenu(): void {
+    this.displayMenu = !this.displayMenu;
   }
 }

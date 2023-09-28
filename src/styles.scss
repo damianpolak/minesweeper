@@ -1,12 +1,18 @@
 body {
   background-color: #483e48;
   margin: auto;
-  font-family: Monospace, "Courier New";
+  font-family: 'PressStart';
   color: white;
   overflow: hidden;
+  image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+  image-rendering: pixelated;                 /* Universal support since 2021   */
+  image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+  margin: unset;
+  color: White;
+  background-color: var(--bg-color);
 }
 
 @font-face {
-  font-family: 'Pixel';
-  src: url('assets/Pixel.ttf');
+  font-family: 'PressStart';
+  src: url('assets/press_start_2p.ttf');
 }

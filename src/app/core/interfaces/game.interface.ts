@@ -3,7 +3,6 @@ import { GameState, Level, STATES } from "./global.interface";
 
 export interface Game {
   selectedLevel: Level;
-  gameState: STATES;
   readonly matrix: Field[][];
 
   updateGameState(event: GameState): void;
@@ -12,3 +11,5 @@ export interface Game {
 export interface Menu {
   id: string
 }
+
+export type Face = 'smile' | 'ooo' | 'winner' | 'loser';

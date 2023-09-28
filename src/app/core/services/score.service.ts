@@ -25,8 +25,8 @@ export class ScoreService {
     return (100 * this._discovered) / this._toDiscover;
   }
 
-  get mines(): number {
-    return this._mines - this._flags;
+  get mines(): string {
+    return String(this._mines - this._flags).padStart(3, '0');
   }
 
   /**

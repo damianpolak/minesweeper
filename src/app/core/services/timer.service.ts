@@ -12,8 +12,8 @@ export class TimerService {
   /**
    * Gets timer count.
    */
-  get count(): number {
-    return this._count;
+  get count(): string {
+    return String(this._count).padStart(3, '0');
   }
 
   /**
