@@ -24,6 +24,7 @@ export class GameComponent implements Game {
   public message: string = '';
   // public message2: string = 'Play again?';
   public displayMenu: boolean = false;
+  public loaded: boolean = false;
 
   constructor(
     public score: ScoreService,
@@ -37,6 +38,7 @@ export class GameComponent implements Game {
     this.score.init(this.selectedLevel);
     this.global.gameState = STATES.NOT_STARTED;
     this.matrix = [];
+    console.log(`=== constructor`);
   }
 
   /**
@@ -90,6 +92,7 @@ export class GameComponent implements Game {
    * Fires when user click new game and emit new game to board component.
    */
   public onClickNewGame(): void {
+    this.face.onFaceSmile();
     this.onNewGame.emit(true);
   }
 
@@ -118,5 +121,9 @@ export class GameComponent implements Game {
 
   public toggleMenu(): void {
     this.displayMenu = !this.displayMenu;
+  }
+
+  public assetsLoaded(value: boolean): void {
+    this.loaded = value;
   }
 }

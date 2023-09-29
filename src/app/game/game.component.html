@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="game">
+  <app-loader *ngIf="!loaded" (onLoaded)="assetsLoaded($event)"></app-loader>
+  <div *ngIf="loaded" class="game">
     <div class="score2">
       <div class="score2-mines">
         <div class="score2-mines-top">

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { STATES } from 'src/app/core/interfaces/global.interface';
+import { AssetsManagerService } from 'src/app/core/services/assets-manager.service';
 import { FaceService } from 'src/app/core/services/face.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 
@@ -18,13 +19,16 @@ export class FieldComponent implements OnInit, OnChanges {
 
   public hover: boolean = false;
   public debug: boolean = false;
-  public imagePath: string = 'assets/gfx/';
-  public imageFile: string = '';
+  // public imagePath: string = 'assets/gfx/';
+  public imageFile: string | undefined = '';
+  public selectedImageFile: string | undefined;
 
   constructor(
     public face: FaceService,
-    public global: GlobalService
+    public global: GlobalService,
+    public _assets: AssetsManagerService
   ) {
+    this.selectedImageFile = this._assets.getAssetsByName('selected')?.path;
     this.debug = this.global.debugMode;
   }
 
@@ -62,9 +66,9 @@ export class FieldComponent implements OnInit, OnChanges {
     if('marked' in changes) {
       if(!changes['marked'].firstChange) {
         if(changes['marked'].currentValue) {
-          this.imageFile = this.imagePath + 'flag.png';
+          this.imageFile = this._assets.getAssetsByName('flag')?.path;
         } else {
-          this.imageFile = this.imagePath + 'block.png';
+          this.imageFile = this._assets.getAssetsByName('closed')?.path;
         }
       }
     }
@@ -72,13 +76,13 @@ export class FieldComponent implements OnInit, OnChanges {
     if('value' in changes) {
       if(changes['value'].firstChange) {
           if(!changes['discovered'].currentValue) {
-            this.imageFile = this.imagePath + 'block.png';
+            this.imageFile = this._assets.getAssetsByName('closed')?.path;
         }
       } else {
         if(!this.marked) {
-          this.imageFile = this.imagePath + 'block.png';
+          this.imageFile = this._assets.getAssetsByName('closed')?.path;
         } else {
-          this.imageFile = this.imagePath + 'flag.png';
+          this.imageFile = this._assets.getAssetsByName('flag')?.path;
         }
       }
     }
@@ -86,17 +90,17 @@ export class FieldComponent implements OnInit, OnChanges {
     if('discovered' in changes) {
       if(!changes['discovered'].firstChange) {
         switch(this.value) {
-          case 0: { this.imageFile = this.imagePath + 'background.png'; } break;
-          case 1: { this.imageFile = this.imagePath + '1.png'; } break;
-          case 2: { this.imageFile = this.imagePath + '2.png'; } break;
-          case 3: { this.imageFile = this.imagePath + '3.png'; } break;
-          case 4: { this.imageFile = this.imagePath + '4.png'; } break;
-          case 5: { this.imageFile = this.imagePath + '5.png'; } break;
-          case 6: { this.imageFile = this.imagePath + '6.png'; } break;
-          case 7: { this.imageFile = this.imagePath + '7.png'; } break;
-          case 8: { this.imageFile = this.imagePath + '8.png'; } break;
-          case '*': { this.imageFile = this.imagePath + 'bomb.png'; } break;
-          case '@': { this.imageFile = this.imagePath + 'bombred.png'; } break;
+          case 0: { this.imageFile = this._assets.getAssetsByName('empty')?.path; } break;
+          case 1: { this.imageFile = this._assets.getAssetsByName('1')?.path; } break;
+          case 2: { this.imageFile = this._assets.getAssetsByName('2')?.path; } break;
+          case 3: { this.imageFile = this._assets.getAssetsByName('3')?.path; } break;
+          case 4: { this.imageFile = this._assets.getAssetsByName('4')?.path; } break;
+          case 5: { this.imageFile = this._assets.getAssetsByName('5')?.path; } break;
+          case 6: { this.imageFile = this._assets.getAssetsByName('6')?.path; } break;
+          case 7: { this.imageFile = this._assets.getAssetsByName('7')?.path; } break;
+          case 8: { this.imageFile = this._assets.getAssetsByName('8')?.path; } break;
+          case '*': { this.imageFile = this._assets.getAssetsByName('mine')?.path; } break;
+          case '@': { this.imageFile = this._assets.getAssetsByName('minedestroyed')?.path; } break;
         }
       }
     }

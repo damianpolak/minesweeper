@@ -41,3 +41,8 @@ export interface StorageConfig {
   level: LEVELS,
   debugMode: boolean | 'YES PLEASE!'
 }
+
+export interface Assets {
+  name: string,
+  path: string
+}

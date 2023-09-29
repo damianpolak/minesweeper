@@ -1,5 +1,10 @@
+:root {
+  --primary-bgcolor: #483e48;
+  --primary-hudcolor: #f08080;
+}
+
 body {
-  background-color: #483e48;
+  background-color: var(--primary-bgcolor);
   margin: auto;
   font-family: 'PressStart';
   color: white;
@@ -9,7 +14,6 @@ body {
   image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
   margin: unset;
   color: White;
-  background-color: var(--bg-color);
 }
 
 @font-face {

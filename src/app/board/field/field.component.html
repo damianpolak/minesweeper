@@ -2,5 +2,5 @@
   <img [src]="imageFile"/>
   <!-- debug -->
   <div [style.width.px]="squareSize" [style.height.px]="squareSize" [ngStyle]="{'color': discovered ? 'red' : 'yellow', 'visibility': debug ? 'visible' : 'hidden' }" style="position: absolute; display: flex; align-items: center; justify-content: center">{{ value }}</div>
-  <img src="assets/gfx/selected1.png" style="position: absolute;" [style.height.px]="squareSize" [ngStyle]="{'display': hover ? 'block' : 'none'}" />
+  <img [src]="selectedImageFile" style="position: absolute;" [style.height.px]="squareSize" [ngStyle]="{'display': hover ? 'block' : 'none'}" />
 </div>
