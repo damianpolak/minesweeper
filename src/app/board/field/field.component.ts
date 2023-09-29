@@ -19,7 +19,6 @@ export class FieldComponent implements OnInit, OnChanges {
 
   public hover: boolean = false;
   public debug: boolean = false;
-  // public imagePath: string = 'assets/gfx/';
   public imageFile: string | undefined = '';
   public selectedImageFile: string | undefined;
 

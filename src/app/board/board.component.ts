@@ -4,6 +4,7 @@ import { Address, Field, SYMBOLS } from '../core/interfaces/field.interface';
 import { Global } from '../core/classes/global.class';
 import { ScoreService } from '../core/services/score.service';
 import { TestCase } from '../core/interfaces/board.interface';
+import { GlobalService } from '../core/services/global.service';
 
 @Component({
   selector: 'app-board',
@@ -23,7 +24,10 @@ export class BoardComponent implements OnInit {
   private _row: number = 0;
   public addressClicked: Address = { row: 0, col: 0};
 
-  constructor(private _score: ScoreService) {}
+  constructor(
+    public global: GlobalService,
+    private _score: ScoreService
+  ) {}
 
   ngOnInit(): void {
     this._initializeBoard();
@@ -114,9 +118,13 @@ export class BoardComponent implements OnInit {
    */
   public onPlayerClick(event: any, field: Field): void {
     if(![STATES.LOSE, STATES.WIN].includes(this.getGameState())) {
-      if(!field.discovered && !field.marked) {
-        this.addressClicked = { row: field.addr.row, col: field.addr.col };
-        this.playerClick(this.addressClicked);
+      if(!this.global.flagMode) {
+        if(!field.discovered && !field.marked) {
+          this.addressClicked = { row: field.addr.row, col: field.addr.col };
+          this.playerClick(this.addressClicked);
+        }
+      } else {
+        this.onPlayerRightClick(event, field);
       }
     }
   }

@@ -1,28 +1,30 @@
 <div class="container">
   <app-loader *ngIf="!loaded" (onLoaded)="assetsLoaded($event)"></app-loader>
   <div *ngIf="loaded" class="game">
-    <div class="score2">
-      <div class="score2-mines">
-        <div class="score2-mines-top">
+    <div class="topnav">
+      <div class="topnav-mines">
+        <div class="topnav-mines-top">
           MINES
         </div>
-        <div class="score2-mines-bottom">{{ score.mines }}</div>
-        <!-- <span class="score2-toggle-lvl" (click)="toggleMenu()">Menu Levels</span> -->
+        <div class="topnav-mines-bottom">{{ score.mines }}</div>
+        <!-- <span class="topnav-toggle-lvl" (click)="toggleMenuLevel()">Menu Levels</span> -->
         <!-- <span>{{ timer.count }}</span> -->
       </div>
 
-      <div class="score2-face" (click)="toggleMenu()"><img [src]="face.currentFacePath" [style.width.rem]="3"></div>
+      <div class="topnav-flagmode" (click)="toggleFlagMode()"><img [src]="assets.getAssetsByName('flag-lg')?.path" [style.width.rem]="3"></div>
+      <div class="topnav-face" (click)="toggleMenuLevel()"><img [src]="face.currentFacePath" [style.width.rem]="3"></div>
+      <div class="topnav-tablescore" (click)="toggleTableScore()"><img [src]="assets.getAssetsByName('tablescore')?.path" [style.width.rem]="3"></div>
 
-      <div class="score2-time">
-        <div class="score2-time-top">
+      <div class="topnav-time">
+        <div class="topnav-time-top">
           TIME
         </div>
-        <div class="score2-time-bottom">
+        <div class="topnav-time-bottom">
           {{ timer.count }}
         </div>
       </div>
     </div>
-      <div class="score2-levels" [ngStyle]="{'visibility': displayMenu ? 'visible' : 'hidden'}">
+      <div class="topnav-levels" [ngStyle]="{'visibility': displayMenu ? 'visible' : 'hidden'}">
         <span *ngFor="let item of menuLevels()" (click)="onClickSelectLevel(item.id)">{{ item.id }}</span>
       </div>
     <div *ngIf="messageEnabled" class="message">

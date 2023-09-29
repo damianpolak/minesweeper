@@ -29,6 +29,8 @@ export class AssetsManagerService {
       { name: 'face-winner', path: 'gfx/face-winner.png' },
       { name: 'flag', path: 'gfx/flag.png' },
       { name: 'selected', path: 'gfx/selected.png' },
+      { name: 'flag-lg', path: 'gfx/flag-lg.png' },
+      { name: 'tablescore', path: 'gfx/tablescore.png' },
     ].map(item => {
       item.path = this._assetsDir + item.path;
       return item;

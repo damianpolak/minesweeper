@@ -21,7 +21,7 @@
     justify-content: center;
     align-items: center;
 
-    .score2 {
+    .topnav {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -34,7 +34,7 @@
       padding-bottom: 1rem;
       gap: 1.5rem;
 
-      .score2-mines, .score2-time {
+      .topnav-mines, .topnav-time {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -42,23 +42,23 @@
         cursor: default;
         user-select: none;
 
-        .score2-toggle-lvl:hover {
+        .topnav-toggle-lvl:hover {
           color: yellow;
           text-decoration: underline;
           cursor: pointer;
         }
       }
 
-      .score2-face {
+      .topnav-face, .topnav-flagmode, .topnav-tablescore {
         cursor: pointer;
       }
 
-      .score2-mines, .score2-time {
+      .topnav-mines, .topnav-time {
         color: var(--primary-hudcolor);
       }
     }
 
-    .score2-levels {
+    .topnav-levels {
       display: flex;
       justify-content: space-between;
       // visibility: hidden;
@@ -67,7 +67,7 @@
       user-select: none;
     }
 
-    .score2-levels > *:hover {
+    .topnav-levels > *:hover {
       color: var(--primary-hudcolor);
     }
 

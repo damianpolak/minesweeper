@@ -11,6 +11,7 @@ export class GlobalService {
   public config!: StorageConfig;
   public gameState: STATES = STATES.NOT_STARTED;
   public orientation: OrientationType = 'landscape-primary';
+  public flagMode: boolean = false;
 
   constructor() { }
 

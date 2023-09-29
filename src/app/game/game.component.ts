@@ -8,6 +8,7 @@ import { TimerService } from '../core/services/timer.service';
 import { TableScoreService } from '../core/services/table-score.service';
 import { FaceService } from '../core/services/face.service';
 import { GlobalService } from '../core/services/global.service';
+import { AssetsManagerService } from '../core/services/assets-manager.service';
 
 @Component({
   selector: 'app-game',
@@ -31,6 +32,7 @@ export class GameComponent implements Game {
     public timer: TimerService,
     public face: FaceService,
     public global: GlobalService,
+    public assets: AssetsManagerService,
     private _tableScore: TableScoreService
   ) {
     this.global.initConfig();
@@ -38,7 +40,6 @@ export class GameComponent implements Game {
     this.score.init(this.selectedLevel);
     this.global.gameState = STATES.NOT_STARTED;
     this.matrix = [];
-    console.log(`=== constructor`);
   }
 
   /**
@@ -119,8 +120,17 @@ export class GameComponent implements Game {
     })
   }
 
-  public toggleMenu(): void {
+  public toggleMenuLevel(): void {
     this.displayMenu = !this.displayMenu;
+  }
+
+  public toggleFlagMode(): void {
+    this.global.flagMode = !this.global.flagMode;
+    console.log(`=== toggleFlagMode is `, this.global.flagMode);
+  }
+
+  public toggleTableScore(): void {
+    throw ('Not yet implemented!');
   }
 
   public assetsLoaded(value: boolean): void {
