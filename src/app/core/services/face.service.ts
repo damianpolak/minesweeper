@@ -8,7 +8,7 @@ import { AssetsManagerService } from './assets-manager.service';
 export class FaceService {
 
   public currentFace: Face = 'smile';
-  // public basePath: string = 'assets/gfx/';
+  public currentFaceFilename: string = '';
   public currentFacePath: string | undefined;
 
   constructor(private _assets: AssetsManagerService) {
@@ -17,21 +17,25 @@ export class FaceService {
 
   public onFaceSmile(): string | undefined {
     this.currentFace = 'smile';
-    return this.currentFacePath = this._assets.getAssetsByName('face-smile')?.path;
+    this.currentFaceFilename = this._assets.getAssetsByName('face-smile').name;
+    return this.currentFacePath = this._assets.getAssetsByName('face-smile').path;
   }
 
   public onFaceOoo(): string | undefined {
     this.currentFace = 'ooo';
-    return this.currentFacePath = this._assets.getAssetsByName('face-ooo')?.path;
+    this.currentFaceFilename = this._assets.getAssetsByName('face-ooo').name;
+    return this.currentFacePath = this._assets.getAssetsByName('face-ooo').path;
   }
 
   public onFaceLoser(): string | undefined {
     this.currentFace = 'loser';
-    return this.currentFacePath = this._assets.getAssetsByName('face-loser')?.path;
+    this.currentFaceFilename = this._assets.getAssetsByName('face-loser').name;
+    return this.currentFacePath = this._assets.getAssetsByName('face-loser').path;
   }
 
   public onFaceWinner(): string | undefined {
     this.currentFace = 'winner';
-    return this.currentFacePath = this._assets.getAssetsByName('face-winner')?.path;
+    this.currentFaceFilename = this._assets.getAssetsByName('face-winner').name;
+    return this.currentFacePath = this._assets.getAssetsByName('face-winner').path;
   }
 }

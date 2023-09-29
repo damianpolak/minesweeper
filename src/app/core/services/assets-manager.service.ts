@@ -26,11 +26,16 @@ export class AssetsManagerService {
       { name: 'face-loser', path: 'gfx/face-loser.png' },
       { name: 'face-ooo', path: 'gfx/face-ooo.png' },
       { name: 'face-smile', path: 'gfx/face-smile.png' },
+      { name: 'face-smile-down', path: 'gfx/face-smile-down.png' },
       { name: 'face-winner', path: 'gfx/face-winner.png' },
       { name: 'flag', path: 'gfx/flag.png' },
       { name: 'selected', path: 'gfx/selected.png' },
       { name: 'flag-lg', path: 'gfx/flag-lg.png' },
+      { name: 'flag-lg-down', path: 'gfx/flag-lg-down.png' },
       { name: 'tablescore', path: 'gfx/tablescore.png' },
+      { name: 'score', path: 'gfx/score.png' },
+      { name: 'score-down', path: 'gfx/score-down.png' },
+      { name: 'noimage', path: 'gfx/noimage.png' },
     ].map(item => {
       item.path = this._assetsDir + item.path;
       return item;
@@ -41,7 +46,8 @@ export class AssetsManagerService {
     return this._assets;
   }
 
-  public getAssetsByName(name: string): Assets | undefined {
-    return this.assets.find(item => item.name === name);
+  public getAssetsByName(name: string): Assets {
+    const asset = this.assets.find(item => item.name === name);
+    return { name: asset ? asset.name : 'noimage', path: (asset ? asset.path : this._assetsDir + 'gfx/noimage.png') } as Assets;
   }
 }
