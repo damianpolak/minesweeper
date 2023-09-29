@@ -22,13 +22,10 @@ export class LoaderComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     let index = 0;
     const step = (100 / this.assets.length);
-    console.log(`=== step`, step);
-    console.log(`=== assets `, this.assets.length);
 
     let intervalHook = setInterval(() => {
       if(index !== (this.assets.length)) {
         this.progress = this.progress + step;
-        console.log(`=== asset (${this.progress}) = `, this.assets[index].path);
         this.currentImagePath = this.assets[index].path;
         index++;
       } else {

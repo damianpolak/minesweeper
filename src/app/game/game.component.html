@@ -1,7 +1,7 @@
 <div class="container">
   <app-loader *ngIf="!loaded" (onLoaded)="assetsLoaded($event)"></app-loader>
   <div *ngIf="loaded" class="game">
-    <div class="topnav">
+  <div class="topnav">
       <div class="topnav-mines">
         <div class="topnav-mines-top">
           MINES
@@ -11,9 +11,15 @@
         <!-- <span>{{ timer.count }}</span> -->
       </div>
 
-      <div class="topnav-flagmode" (click)="toggleFlagMode()"><img [src]="assets.getAssetsByName('flag-lg')?.path" [style.width.rem]="3"></div>
-      <div class="topnav-face" (click)="toggleMenuLevel()"><img [src]="face.currentFacePath" [style.width.rem]="3"></div>
-      <div class="topnav-tablescore" (click)="toggleTableScore()"><img [src]="assets.getAssetsByName('tablescore')?.path" [style.width.rem]="3"></div>
+      <div class="topnav-flagmode">
+        <extrabutton imageName="flag-lg" imageHoverName="flag-lg-down" (onClick)="toggleFlagMode()" [toggleMode]="true"></extrabutton>
+      </div>
+      <div class="topnav-face">
+        <extrabutton [imageName]="face.currentFaceFilename" imageHoverName="face-smile-down" (onClick)="toggleMenuLevel()"></extrabutton>
+      </div>
+      <div class="topnav-tablescore">
+        <extrabutton imageName="score" imageHoverName="score-down" (onClick)="toggleTableScore()"></extrabutton>
+      </div>
 
       <div class="topnav-time">
         <div class="topnav-time-top">

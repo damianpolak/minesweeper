@@ -40,6 +40,7 @@ export class GameComponent implements Game {
     this.score.init(this.selectedLevel);
     this.global.gameState = STATES.NOT_STARTED;
     this.matrix = [];
+    this.face.onFaceSmile();
   }
 
   /**
