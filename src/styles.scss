@@ -16,6 +16,14 @@ body {
   color: White;
 }
 
+img {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 @font-face {
   font-family: 'PressStart';
   src: url('assets/press_start_2p.ttf');
