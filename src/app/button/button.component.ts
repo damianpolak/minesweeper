@@ -5,7 +5,13 @@ import { AssetsManagerService } from '../core/services/assets-manager.service';
   selector: 'extrabutton',
   template: `
     <img (click)="userClick($event)" [src]="currentImagePath" [style.width]="squareSize" [style.height]="squareSize">
+    <img *ngIf="onOverEnabled" [src]="imageOnOverPath" [style.width]="squareSize" [style.height]="squareSize" [ngStyle]="{'display': mouseIsOver ? 'block' : 'none'}" style="position: absolute;">
   `,
+  styles: [`
+    :host {
+      display: flex;
+    }
+  `]
 })
 export class ButtonComponent implements OnChanges {
 
@@ -13,16 +19,21 @@ export class ButtonComponent implements OnChanges {
   @Output() onMouseDown: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
   @Output() onMouseUp: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
   @Output() onMouseOut: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+  @Output() onMouseOver: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   @Input() imageName!: string;
-  @Input() imageHoverName!: string;
+  @Input() imageOnDownName!: string;
+  @Input() imageOnOverName!: string;
   @Input() squareSize: string = '3rem';
   @Input() toggleMode: boolean = false;
 
   public currentImagePath: string = '';
   public imagePath: string = '';
-  public imageHoverPath: string = '';
-  private _hoverEnabled: boolean = false;
+  public imageOnDownPath: string = '';
+  public imageOnOverPath: string = '';
+  public mouseIsOver: boolean = false;
+  private _onDownEnabled: boolean = false;
+  public onOverEnabled: boolean = false;
   private _toggled: boolean = false;
 
   constructor(
@@ -31,15 +42,15 @@ export class ButtonComponent implements OnChanges {
 
   @HostListener('mousedown', ['$event'])
   _onMouseDown(event: MouseEvent) {
-    if(this._hoverEnabled) {
-      this.currentImagePath = this.imageHoverPath;
+    if(this._onDownEnabled) {
+      this.currentImagePath = this.imageOnDownPath;
       this.onMouseDown.emit(event);
     }
   }
 
   @HostListener('mouseup', ['$event'])
   _onMouseUp(event: MouseEvent) {
-    if(this._hoverEnabled) {
+    if(this._onDownEnabled) {
       if(!this.toggleMode) {
         this.currentImagePath = this.imagePath;
         this.onMouseUp.emit(event);
@@ -47,7 +58,7 @@ export class ButtonComponent implements OnChanges {
         if(this._toggled) {
           this.currentImagePath = this.imagePath;
         } else {
-          this.currentImagePath = this.imageHoverPath;
+          this.currentImagePath = this.imageOnDownPath;
         }
       }
     }
@@ -58,6 +69,16 @@ export class ButtonComponent implements OnChanges {
     if(!this._toggled) {
       this.currentImagePath = this.imagePath;
       this.onMouseOut.emit(event);
+      this.mouseIsOver = false;
+    }
+  }
+
+  @HostListener('mouseover', ['$event'])
+  _onMouseOver(event: MouseEvent) {
+    if(this.onOverEnabled) {
+      // console.log(`=== over`, this.mouseIsOver);
+      // this.onMouseOver.emit(event);
+      // this.mouseIsOver = true;
     }
   }
 
@@ -67,9 +88,14 @@ export class ButtonComponent implements OnChanges {
       this.currentImagePath = this.imagePath;
     }
 
-    if('imageHoverName' in changes) {
-      this._hoverEnabled = true;
-      this.imageHoverPath = this.assets.getAssetsByName(this.imageHoverName).path;
+    if('imageOnDownName' in changes) {
+      this._onDownEnabled = true;
+      this.imageOnDownPath = this.assets.getAssetsByName(this.imageOnDownName).path;
+    }
+
+    if('imageOnOverName' in changes) {
+      this.onOverEnabled = true;
+      this.imageOnOverPath = this.assets.getAssetsByName(this.imageOnOverName).path;
     }
   }
 
