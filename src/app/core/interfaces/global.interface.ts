@@ -39,6 +39,7 @@ export interface Level extends Difficulty {
 
 export interface StorageConfig {
   level: LEVELS,
+  questionMarkEnabled: false,
   debugMode: boolean | 'YES PLEASE!'
 }
 

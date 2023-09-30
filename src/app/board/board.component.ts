@@ -122,6 +122,7 @@ export class BoardComponent implements OnInit {
         if(!field.discovered && !field.marked) {
           this.addressClicked = { row: field.addr.row, col: field.addr.col };
           this.playerClick(this.addressClicked);
+          this._score.discoverClickIncrement();
         }
       } else {
         this.onPlayerRightClick(event, field);
@@ -135,6 +136,7 @@ export class BoardComponent implements OnInit {
   public onPlayerRightClick(event: any, field: Field): void {
     event.preventDefault();
     if(this.getGameState() != STATES.LOSE && !field.discovered) {
+      this._score.flagClickIncrement();
       this._toggleFieldAsMarked(field);
     }
   }

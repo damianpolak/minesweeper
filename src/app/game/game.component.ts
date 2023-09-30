@@ -49,6 +49,15 @@ export class GameComponent implements Game {
   public updateGameState(state: GameState): void {
     this.global.gameState = state.current;
 
+    const scoreTable = {
+      level: this.selectedLevel.name,
+      time: Number(this.timer.count),
+      flagClicks: this.score.flagClicks,
+      discoverClicks: this.score.discoverClicks,
+      scorePerc: this.score.discoveredPerc,
+      timestamp: new Date()
+    };
+
     switch(this.global.gameState) {
       case STATES.NOT_STARTED: {
         this.messageEnabled = false;
@@ -64,28 +73,14 @@ export class GameComponent implements Game {
         this.messageEnabled = true;
         this.timer.stop();
         this.face.onFaceWinner();
-
-        this._tableScore.add({
-          type: 'LOSE',
-          level: this.selectedLevel.name,
-          time: Number(this.timer.count),
-          scorePerc: this.score.discoveredPerc,
-          timestamp: new Date()
-        });
+        this._tableScore.add({...{ type: 'WIN'}, ...scoreTable});
       } break;
       case STATES.LOSE: {
         this.messageEnabled = true;
         this.message = 'You lose!';
         this.timer.stop();
         this.face.onFaceLoser();
-
-        this._tableScore.add({
-          type: 'LOSE',
-          level: this.selectedLevel.name,
-          time: Number(this.timer.count),
-          scorePerc: this.score.discoveredPerc,
-          timestamp: new Date()
-        });
+        this._tableScore.add({...{ type: 'LOSE'}, ...scoreTable});
       }
     }
   }

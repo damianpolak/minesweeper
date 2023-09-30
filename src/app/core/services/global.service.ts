@@ -23,6 +23,7 @@ export class GlobalService {
     } else {
       this.config = {
         level: LEVELS.LOW,
+        questionMarkEnabled: false,
         debugMode: false
       }
       localStorage.setItem(this._storageKey, JSON.stringify(this.config));

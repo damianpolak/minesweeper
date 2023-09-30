@@ -28,6 +28,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
         position: absolute;
         font-size: 8px;
         padding: .3rem 0 0 .3rem;
+        color: #000000;
       }
     }
   `],
