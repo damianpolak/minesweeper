@@ -8,7 +8,7 @@ import { FieldComponent } from './board/field/field.component';
 import { GameComponent } from './game/game.component';
 import { GlobalService } from './core/services/global.service';
 import { LoaderComponent } from './loader/loader.component';
-import { ButtonComponent } from './button/button.component';
+import { ExtraButtonComponent } from './button/extrabutton.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { ButtonComponent } from './button/button.component';
     FieldComponent,
     GameComponent,
     LoaderComponent,
-    ButtonComponent,
+    ExtraButtonComponent,
   ],
   imports: [
     BrowserModule,

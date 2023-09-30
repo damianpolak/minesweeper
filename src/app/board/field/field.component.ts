@@ -6,82 +6,83 @@ import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-field',
-  templateUrl: './field.component.html',
-  styleUrls: ['./field.component.scss'],
+  template: `
+    <div class="field">
+      <extrabutton
+        [imageName]="currentFileName"
+        [squareSize]="squareSize + 'px'"
+        (onMouseDown)="mouseDown()"
+        (onMouseUp)="mouseUp()"
+        (onMouseOut)="mouseOut()"
+        >
+      </extrabutton>
+      <div *ngIf="global.debugMode" class="debug">{{ value }}</div>
+    </div>
+  `,
+  styles: [`
+    .field {
+      display: flex;
+      flex-direction: column;
+
+      > .debug {
+        position: absolute;
+        font-size: 8px;
+        padding: .3rem 0 0 .3rem;
+      }
+    }
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FieldComponent implements OnInit, OnChanges {
+export class FieldComponent implements OnChanges {
   @Input() value: string | number = '';
   @Input() squareSize?: number;
   @Input() discovered: boolean = false;
   @Input() marked: boolean = false;
-  @Input() hint: boolean = false;
 
-  public hover: boolean = false;
-  public debug: boolean = false;
-  public imageFile: string | undefined = '';
-  public selectedImageFile: string | undefined;
+  public currentFileName: string = '';
 
   constructor(
     public face: FaceService,
     public global: GlobalService,
     public _assets: AssetsManagerService
-  ) {
-    this.selectedImageFile = this._assets.getAssetsByName('selected')?.path;
-    this.debug = this.global.debugMode;
-  }
+  ) {}
 
-  @HostListener('mouseover')
-  onMouseOver() {
-    if(!this.discovered) this.hover = true;
-  }
-
-  @HostListener('mouseout')
-  onMouseOut() {
-    if(![STATES.LOSE, STATES.WIN, STATES.FINISHED].includes(this.global.gameState)) {
-      this.hover = false;
-      this.face.onFaceSmile();
-    }
-  }
-
-  @HostListener('mousedown')
-  onMouseDown() {
+  public mouseDown(): void {
     this.face.onFaceOoo();
   }
 
-  @HostListener('mouseup')
-  onMouseUp() {
+  public mouseUp(): void {
     if(![STATES.LOSE, STATES.WIN, STATES.FINISHED].includes(this.global.gameState)) {
       this.face.onFaceSmile();
     }
   }
 
-  ngOnInit(): void {
-
+  public mouseOut(): void {
+    if(![STATES.LOSE, STATES.WIN, STATES.FINISHED].includes(this.global.gameState)) {
+      this.face.onFaceSmile();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.imageFile = '';
+    this.currentFileName = '';
     if('marked' in changes) {
       if(!changes['marked'].firstChange) {
         if(changes['marked'].currentValue) {
-          this.imageFile = this._assets.getAssetsByName('flag')?.path;
+          this.currentFileName = this._assets.getAssetsByName('flag')?.name;
         } else {
-          this.imageFile = this._assets.getAssetsByName('closed')?.path;
+          this.currentFileName = this._assets.getAssetsByName('closed')?.name;
         }
       }
     }
 
     if('value' in changes) {
       if(changes['value'].firstChange) {
-          if(!changes['discovered'].currentValue) {
-            this.imageFile = this._assets.getAssetsByName('closed')?.path;
-        }
+        if(!changes['discovered'].currentValue) this.currentFileName = this._assets.getAssetsByName('closed')?.name;
       } else {
         if(!this.marked) {
-          this.imageFile = this._assets.getAssetsByName('closed')?.path;
+          this.currentFileName = this._assets.getAssetsByName('closed')?.name;
         } else {
-          this.imageFile = this._assets.getAssetsByName('flag')?.path;
+          this.currentFileName = this._assets.getAssetsByName('flag')?.name;
         }
       }
     }
@@ -89,17 +90,17 @@ export class FieldComponent implements OnInit, OnChanges {
     if('discovered' in changes) {
       if(!changes['discovered'].firstChange) {
         switch(this.value) {
-          case 0: { this.imageFile = this._assets.getAssetsByName('empty')?.path; } break;
-          case 1: { this.imageFile = this._assets.getAssetsByName('1')?.path; } break;
-          case 2: { this.imageFile = this._assets.getAssetsByName('2')?.path; } break;
-          case 3: { this.imageFile = this._assets.getAssetsByName('3')?.path; } break;
-          case 4: { this.imageFile = this._assets.getAssetsByName('4')?.path; } break;
-          case 5: { this.imageFile = this._assets.getAssetsByName('5')?.path; } break;
-          case 6: { this.imageFile = this._assets.getAssetsByName('6')?.path; } break;
-          case 7: { this.imageFile = this._assets.getAssetsByName('7')?.path; } break;
-          case 8: { this.imageFile = this._assets.getAssetsByName('8')?.path; } break;
-          case '*': { this.imageFile = this._assets.getAssetsByName('mine')?.path; } break;
-          case '@': { this.imageFile = this._assets.getAssetsByName('minedestroyed')?.path; } break;
+          case 0: { this.currentFileName = this._assets.getAssetsByName('empty')?.name; } break;
+          case 1: { this.currentFileName = this._assets.getAssetsByName('1')?.name; } break;
+          case 2: { this.currentFileName = this._assets.getAssetsByName('2')?.name; } break;
+          case 3: { this.currentFileName = this._assets.getAssetsByName('3')?.name; } break;
+          case 4: { this.currentFileName = this._assets.getAssetsByName('4')?.name; } break;
+          case 5: { this.currentFileName = this._assets.getAssetsByName('5')?.name; } break;
+          case 6: { this.currentFileName = this._assets.getAssetsByName('6')?.name; } break;
+          case 7: { this.currentFileName = this._assets.getAssetsByName('7')?.name; } break;
+          case 8: { this.currentFileName = this._assets.getAssetsByName('8')?.name; } break;
+          case '*': { this.currentFileName = this._assets.getAssetsByName('mine')?.name; } break;
+          case '@': { this.currentFileName = this._assets.getAssetsByName('minedestroyed')?.name; } break;
         }
       }
     }

@@ -13,7 +13,7 @@ import { AssetsManagerService } from '../core/services/assets-manager.service';
     }
   `]
 })
-export class ButtonComponent implements OnChanges {
+export class ExtraButtonComponent implements OnChanges {
 
   @Output() onClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
   @Output() onMouseDown: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
@@ -42,10 +42,11 @@ export class ButtonComponent implements OnChanges {
 
   @HostListener('mousedown', ['$event'])
   _onMouseDown(event: MouseEvent) {
+    console.log(`=== m down`);
     if(this._onDownEnabled) {
       this.currentImagePath = this.imageOnDownPath;
-      this.onMouseDown.emit(event);
     }
+    this.onMouseDown.emit(event);
   }
 
   @HostListener('mouseup', ['$event'])
@@ -53,7 +54,6 @@ export class ButtonComponent implements OnChanges {
     if(this._onDownEnabled) {
       if(!this.toggleMode) {
         this.currentImagePath = this.imagePath;
-        this.onMouseUp.emit(event);
       } else {
         if(this._toggled) {
           this.currentImagePath = this.imagePath;
@@ -62,15 +62,16 @@ export class ButtonComponent implements OnChanges {
         }
       }
     }
+    this.onMouseUp.emit(event);
   }
 
   @HostListener('mouseout', ['$event'])
   _onMouseOut(event: MouseEvent) {
     if(!this._toggled) {
       this.currentImagePath = this.imagePath;
-      this.onMouseOut.emit(event);
       this.mouseIsOver = false;
     }
+    this.onMouseOut.emit(event);
   }
 
   @HostListener('mouseover', ['$event'])
