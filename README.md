@@ -14,7 +14,7 @@ Any help and contribution in development are welcome.
 ## Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_1.png">
-  <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_2.png">
+  <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_1.png" style="width: 400px; height: 400px">
+  <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_2.png" style="width: 400px; height: 400px">
   <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_3.png">
 </p>
