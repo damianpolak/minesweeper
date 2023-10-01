@@ -2,26 +2,19 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.7.
 
-## Development server
+## About game
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+A simple implementation of minesweeper in Angular 15. The game currently has functions like four levels, flag mode and saving stats to local storage.
+Just see and play at [damianpolak.github.io/minesweeper](https://damianpolak.github.io/minesweeper)
 
-## Code scaffolding
+## Contribution
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Any help and contribution in development are welcome.
 
-## Build
+## Screenshots
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_1.png" style="width: 400px; height: 400px">
+  <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_2.png" style="width: 400px; height: 400px">
+  <img src="https://raw.githubusercontent.com/damianpolak/minesweeper/main/src/assets/github/minesweeper_3.png">
+</p>
