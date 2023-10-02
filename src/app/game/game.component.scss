@@ -3,13 +3,6 @@
   width: 100%;
   height: 100%;
 
-  .blackened {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.534);
-  }
-
   .game {
     display: flex;
     flex-direction: column;
@@ -77,38 +70,25 @@
       // border-radius: 5px;
     }
 
-    // ---
-
-    .message {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      font-weight: bold;
-      font-size: 1.2rem;
-      text-shadow: 2px 2px #2c0c0c;
-      background-color: var(--primary-bgcolor);
-      padding: 1rem;
-      z-index: 9;
-      border: 1px solid #000000;
-
-      > span:hover {
-        cursor: pointer;
-        color: var(--primary-hudcolor);
-      }
-    }
-
     .debug {
       position: absolute;
       left: 0;
       bottom: 0;
     }
 
-    .no-more-events, .message, .board {
+    .no-more-events, .board {
       // pointer-events: none;
       user-select: none;
     }
   }
 }
 
+.modal-end-message, .modal-level-menu {
+  span {
+    cursor: pointer;
+  }
+
+  span:hover {
+    color: var(--primary-hudcolor);
+  }
+}

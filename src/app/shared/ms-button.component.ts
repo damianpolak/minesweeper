@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnChanges,
 import { AssetsManagerService } from '../core/services/assets-manager.service';
 
 @Component({
-  selector: 'extrabutton',
+  selector: 'ms-button',
   template: `
     <img (click)="userClick($event)" [src]="currentImagePath" [style.width]="squareSize" [style.height]="squareSize">
     <img *ngIf="onOverEnabled" [src]="imageOnOverPath" [style.width]="squareSize" [style.height]="squareSize" [ngStyle]="{'display': mouseIsOver ? 'block' : 'none'}" style="position: absolute;">
@@ -13,7 +13,7 @@ import { AssetsManagerService } from '../core/services/assets-manager.service';
     }
   `]
 })
-export class ExtraButtonComponent implements OnChanges {
+export class MsButtonComponent implements OnChanges {
 
   @Output() onClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
   @Output() onMouseDown: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();

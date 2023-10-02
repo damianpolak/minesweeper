@@ -8,7 +8,8 @@ import { FieldComponent } from './board/field/field.component';
 import { GameComponent } from './game/game.component';
 import { GlobalService } from './core/services/global.service';
 import { LoaderComponent } from './loader/loader.component';
-import { ExtraButtonComponent } from './button/extrabutton.component';
+import { MsButtonComponent } from './shared/ms-button.component';
+import { MsModalComponent } from './shared/ms-modal.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ExtraButtonComponent } from './button/extrabutton.component';
     FieldComponent,
     GameComponent,
     LoaderComponent,
-    ExtraButtonComponent,
+    MsButtonComponent,
+    MsModalComponent,
   ],
   imports: [
     BrowserModule,

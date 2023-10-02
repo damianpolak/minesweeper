@@ -35,6 +35,7 @@ export class AssetsManagerService {
       { name: 'tablescore', path: 'gfx/tablescore.png' },
       { name: 'score', path: 'gfx/score.png' },
       { name: 'score-down', path: 'gfx/score-down.png' },
+      { name: 'border', path: 'gfx/border.png' },
       { name: 'noimage', path: 'gfx/noimage.png' },
     ].map(item => {
       item.path = this._assetsDir + item.path;

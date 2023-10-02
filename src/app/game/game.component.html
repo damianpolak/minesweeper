@@ -8,26 +8,26 @@
       </div>
 
       <div class="topnav-flagmode">
-        <extrabutton
+        <ms-button
           imageName="flag-lg"
           imageOnDownName="flag-lg-down"
           (onClick)="toggleFlagMode()"
           [toggleMode]="true"
-        ></extrabutton>
+        ></ms-button>
       </div>
       <div class="topnav-face">
-        <extrabutton
+        <ms-button
           [imageName]="face.currentFaceFilename"
           imageOnDownName="face-smile-down"
           (onClick)="toggleMenuLevel()"
-        ></extrabutton>
+        ></ms-button>
       </div>
       <div class="topnav-tablescore">
-        <extrabutton
+        <ms-button
           imageName="score"
           imageOnDownName="score-down"
           (onClick)="toggleTableScore()"
-        ></extrabutton>
+        ></ms-button>
       </div>
 
       <div class="topnav-time">
@@ -37,21 +37,6 @@
         </div>
       </div>
     </div>
-    <div
-      class="topnav-levels"
-      [ngStyle]="{ visibility: displayMenu ? 'visible' : 'hidden' }"
-    >
-      <span
-        *ngFor="let item of menuLevels()"
-        (click)="onClickSelectLevel(item.id)"
-        >{{ item.id }}</span
-      >
-    </div>
-    <div *ngIf="messageEnabled" class="message">
-      {{ message }}
-      <span (click)="onClickNewGame()">Play again?</span>
-    </div>
-
     <div
       class="board"
       [ngStyle]="{
@@ -67,6 +52,13 @@
       ></app-board>
     </div>
   </div>
-
-  <!-- <div class="blackened"></div> -->
 </div>
+
+<ms-modal class="modal-end-message" [visible]="modalMessageVisible">
+  {{ endGameMessage }}
+  <span (click)="onClickNewGame()">Play again?</span>
+</ms-modal>
+
+<ms-modal class="modal-level-menu" [visible]="modalLevelMenuVisible" (onClose)="onMenuLevelClose()">
+  <span *ngFor="let item of menuLevels()" (click)="onClickSelectLevel(item.id)">{{ item.id }}</span>
+</ms-modal>

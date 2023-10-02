@@ -47,3 +47,11 @@ export interface Assets {
   name: string,
   path: string
 }
+
+export namespace Modal {
+  export type EventType = 'onClose' | 'onAction';
+  export interface EventMessage {
+    event: EventType,
+    data?: unknown
+  }
+}

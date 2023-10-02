@@ -21,8 +21,9 @@ export class GameComponent implements Game {
 
   public readonly matrix: Field[][];
   public onNewGame: EventEmitter<boolean> = new EventEmitter<boolean>();
-  public messageEnabled: boolean = false;
-  public message: string = '';
+  public modalMessageVisible: boolean = false;
+  public modalLevelMenuVisible: boolean = false;
+  public endGameMessage: string = '';
   // public message2: string = 'Play again?';
   public displayMenu: boolean = false;
   public loaded: boolean = false;
@@ -60,7 +61,7 @@ export class GameComponent implements Game {
 
     switch(this.global.gameState) {
       case STATES.NOT_STARTED: {
-        this.messageEnabled = false;
+        this.modalMessageVisible = false;
         this.timer.restart();
         this.score.reset();
         this.score.init(this.selectedLevel);
@@ -69,15 +70,15 @@ export class GameComponent implements Game {
         this.timer.start();
       } break;
       case STATES.WIN: {
-        this.message = 'You win!';
-        this.messageEnabled = true;
+        this.endGameMessage = 'You win!';
+        this.modalMessageVisible = true;
         this.timer.stop();
         this.face.onFaceWinner();
         this._tableScore.add({...{ type: 'WIN'}, ...scoreTable});
       } break;
       case STATES.LOSE: {
-        this.messageEnabled = true;
-        this.message = 'You lose!';
+        this.modalMessageVisible = true;
+        this.endGameMessage = 'You lose!';
         this.timer.stop();
         this.face.onFaceLoser();
         this._tableScore.add({...{ type: 'LOSE'}, ...scoreTable});
@@ -100,8 +101,9 @@ export class GameComponent implements Game {
     this.global.level = level as LEVELS;
     this.selectedLevel = Global.getLevel(this.global.config.level);
     setTimeout(() => {
+      this.modalLevelMenuVisible = false;
       this.onNewGame.emit(true);
-      this.displayMenu = false;
+      // this.displayMenu = false;
     });
   }
 
@@ -117,7 +119,8 @@ export class GameComponent implements Game {
   }
 
   public toggleMenuLevel(): void {
-    this.displayMenu = !this.displayMenu;
+    // this.displayMenu = !this.displayMenu;
+    this.modalLevelMenuVisible = !this.modalLevelMenuVisible;
   }
 
   public toggleFlagMode(): void {
@@ -131,5 +134,9 @@ export class GameComponent implements Game {
 
   public assetsLoaded(value: boolean): void {
     this.loaded = value;
+  }
+
+  public onMenuLevelClose(): void {
+    this.modalLevelMenuVisible = false;
   }
 }

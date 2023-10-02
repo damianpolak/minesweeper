@@ -8,14 +8,14 @@ import { GlobalService } from 'src/app/core/services/global.service';
   selector: 'app-field',
   template: `
     <div class="field">
-      <extrabutton
+      <ms-button
         [imageName]="currentFileName"
         [squareSize]="squareSize + 'px'"
         (onMouseDown)="mouseDown()"
         (onMouseUp)="mouseUp()"
         (onMouseOut)="mouseOut()"
         >
-      </extrabutton>
+      </ms-button>
       <div *ngIf="global.debugMode" class="debug">{{ value }}</div>
     </div>
   `,
