@@ -1,6 +1,5 @@
 <div class="container">
-  <app-loader *ngIf="!loaded" (onLoaded)="assetsLoaded($event)"></app-loader>
-  <div *ngIf="loaded" class="game">
+  <div class="game">
     <div class="topnav">
       <div class="topnav-mines">
         <div class="topnav-mines-top">MINES</div>
@@ -52,6 +51,10 @@
       ></app-board>
     </div>
   </div>
+</div>
+
+<div class="assets" style="display: none;">
+  <img *ngFor="let item of assets.assets" [src]="item.path">
 </div>
 
 <ms-modal class="modal-end-message" [visible]="modalMessageVisible">

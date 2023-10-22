@@ -7,7 +7,6 @@ import { BoardComponent } from './board/board.component';
 import { FieldComponent } from './board/field/field.component';
 import { GameComponent } from './game/game.component';
 import { GlobalService } from './core/services/global.service';
-import { LoaderComponent } from './loader/loader.component';
 import { MsButtonComponent } from './shared/ms-button.component';
 import { MsModalComponent } from './shared/ms-modal.component';
 
@@ -17,7 +16,6 @@ import { MsModalComponent } from './shared/ms-modal.component';
     BoardComponent,
     FieldComponent,
     GameComponent,
-    LoaderComponent,
     MsButtonComponent,
     MsModalComponent,
   ],

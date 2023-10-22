@@ -17,16 +17,13 @@ import { AssetsManagerService } from '../core/services/assets-manager.service';
 })
 export class GameComponent implements Game {
   selectedLevel: Level;
-  // gameState: STATES;
 
   public readonly matrix: Field[][];
   public onNewGame: EventEmitter<boolean> = new EventEmitter<boolean>();
   public modalMessageVisible: boolean = false;
   public modalLevelMenuVisible: boolean = false;
   public endGameMessage: string = '';
-  // public message2: string = 'Play again?';
   public displayMenu: boolean = false;
-  public loaded: boolean = false;
 
   constructor(
     public score: ScoreService,
@@ -130,10 +127,6 @@ export class GameComponent implements Game {
 
   public toggleTableScore(): void {
     throw ('Not yet implemented!');
-  }
-
-  public assetsLoaded(value: boolean): void {
-    this.loaded = value;
   }
 
   public onMenuLevelClose(): void {
